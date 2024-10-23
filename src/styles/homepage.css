@@ -1,0 +1,16 @@
+.home-container {
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fashion-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}

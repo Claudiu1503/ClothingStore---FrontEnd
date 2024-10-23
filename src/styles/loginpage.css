@@ -1,0 +1,40 @@
+.login-page {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    height: 100vh;
+}
+
+.back-button {
+    background-color: #ff4081;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.back-button:hover {
+    background-color: #ff1a5c;
+    transform: scale(1.1);
+}
+
+.login-container {
+    width: 300px;
+    margin: 100px auto 0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
