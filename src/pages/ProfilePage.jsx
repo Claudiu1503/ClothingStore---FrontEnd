@@ -1,4 +1,3 @@
-// src/pages/ProfilePage.js
 import { useState, useEffect } from 'react';
 import '../styles/profilepage.css';
 
@@ -19,19 +18,21 @@ const ProfilePage = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        // Fetch user data from API (mocked here for example)
         const fetchUserData = async () => {
+            const token = localStorage.getItem('token'); // Get the token from localStorage
             const response = await fetch('http://localhost:8080/user/profile', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Add token or authorization header if required
+                    Authorization: `Bearer ${token}`, // Include the token in the Authorization header
                 },
             });
 
             if (response.ok) {
                 const data = await response.json();
-                setUser(data); // Assuming API returns user data in the required format
+                setUser(data);
+            } else {
+                alert('Failed to fetch user data');
             }
         };
 
@@ -48,6 +49,7 @@ const ProfilePage = () => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include token
             },
             body: JSON.stringify(user),
         });

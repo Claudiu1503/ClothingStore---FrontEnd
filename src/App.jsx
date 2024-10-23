@@ -8,6 +8,7 @@ import ResetPasswordPage from './pages/ResetpasswordPage';
 import ProfilePage from './pages/ProfilePage'; // Import the ProfilePage
 import { useState } from 'react';
 
+
 const App = () => {
     const location = useLocation();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,7 +41,7 @@ const App = () => {
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
-                <Route path="/profile" element={<ProfilePage />} /> {/* Profile page route */}
+                <Route path="/profile" element={<ProfilePage />} />
             </Routes>
         </div>
     );

@@ -68,12 +68,18 @@ const LoginPage = ({ onLogin }) => {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Login successful:', data.message);
-                navigate('/');
+
+
+                // // Store the token in localStorage
+                // localStorage.setItem('token', data.token); // Assuming the token is returned in the response
+
+
 
                 // Extract the username from the response
                 const userName = data.username; // Get username from the response
                 onLogin(userName);
 
+                navigate('/');
             } else {
                 const errorMessage = await response.json();
                 setError(errorMessage.error);
