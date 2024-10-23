@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types'; // Import PropTypes for validation
 import '../styles/loginpage.css';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,12 +28,14 @@ const LoginPage = () => {
             console.log(response.status);
 
             if (response.ok) {
-                // Autentificare cu succes
                 const data = await response.json();
                 console.log('Login successful:', data.message);
-                navigate('/'); // Redirecționează utilizatorul către pagina principală
+                navigate('/');
+
+                const userName = "John Doe"; // Aceasta ar trebui să fie obținută de la server
+                onLogin(userName);
+
             } else {
-                // Eroare de autentificare
                 const errorMessage = await response.json();
                 setError(errorMessage.error);
             }
@@ -41,7 +44,6 @@ const LoginPage = () => {
             setError('An unexpected error occurred. Please try again later.');
         }
     };
-
 
     return (
         <div className="login-page">
@@ -73,11 +75,15 @@ const LoginPage = () => {
                 </form>
                 <div className="login-links">
                     <p onClick={() => navigate('/reset-password')}>Forgot Password?</p>
-                    <p onClick={() => navigate('/register')}> NO account? Create one! </p>
+                    <p onClick={() => navigate('/register')}>NO account? Create one!</p>
                 </div>
             </div>
         </div>
     );
+};
+
+LoginPage.propTypes = {
+    onLogin: PropTypes.func.isRequired, // Add prop types for validation
 };
 
 export default LoginPage;
