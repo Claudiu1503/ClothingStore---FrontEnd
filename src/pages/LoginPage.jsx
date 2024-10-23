@@ -9,6 +9,44 @@ const LoginPage = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    // const handleLogin = async (e) => {
+    //     e.preventDefault();
+    //
+    //     const loginData = {
+    //         email: email,
+    //         password: password,
+    //     };
+    //
+    //     try {
+    //         const response = await fetch('http://localhost:8080/user/login', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(loginData),
+    //         });
+    //         console.log(response.status);
+    //
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             console.log('Login successful:', data.message);
+    //             navigate('/');
+    //
+    //             const userName = "John Doe"; // Aceasta ar trebui să fie obținută de la server
+    //             onLogin(userName);
+    //
+    //         } else {
+    //             const errorMessage = await response.json();
+    //             setError(errorMessage.error);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error during login:', error);
+    //         setError('An unexpected error occurred. Please try again later.');
+    //     }
+    // };
+
+
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -32,7 +70,8 @@ const LoginPage = ({ onLogin }) => {
                 console.log('Login successful:', data.message);
                 navigate('/');
 
-                const userName = "John Doe"; // Aceasta ar trebui să fie obținută de la server
+                // Extract the username from the response
+                const userName = data.username; // Get username from the response
                 onLogin(userName);
 
             } else {
@@ -44,6 +83,10 @@ const LoginPage = ({ onLogin }) => {
             setError('An unexpected error occurred. Please try again later.');
         }
     };
+
+
+
+
 
     return (
         <div className="login-page">
