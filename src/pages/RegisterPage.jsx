@@ -28,7 +28,7 @@ const RegisterPage = () => {
         );
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
 
         if (!validateUsername(username)) {
@@ -52,8 +52,36 @@ const RegisterPage = () => {
         }
 
         // Here you would typically make a request to register the user
-        setMessage('Registration successful! Redirecting to login...');
-        setCountdown(6); // Set countdown to 6 seconds
+        const registerData = {
+            username: username,
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch('http://localhost:8080/user/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(registerData),
+            });
+
+            if (response.ok) {
+                // Înregistrare cu succes
+                // const data = await response.json();
+                setMessage('Registration successful! Redirecting to login...');
+                setCountdown(4);
+            } else {
+                // Eroare în timpul înregistrării
+                const errorMessage = await response.text();
+                setMessage(errorMessage);
+            }
+        } catch (error) {
+            console.error('Error during registration:', error);
+            setMessage('An unexpected error occurred. Please try again later.');
+        }
+
     };
 
     useEffect(() => {
