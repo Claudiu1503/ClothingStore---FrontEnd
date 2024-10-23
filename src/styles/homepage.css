@@ -9,8 +9,91 @@
     align-items: center;
 }
 
+.image-container {
+    position: relative;
+}
+
 .fashion-image {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
 }
+
+/* Overlay with blurred background */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+}
+
+.animated-text {
+    font-size: 70px;
+    color: white;
+    text-shadow: 10px 10px 8px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0.8); /* Start with a smaller size */
+    animation: fadeInMoveUpAndScale 3s ease-out forwards;
+}
+
+/* Combined animation: fade in, move up, and scale */
+@keyframes fadeInMoveUpAndScale {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8); /* Small and lower down */
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(10px) scale(1.05); /* Grow slightly larger */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1); /* Final position and size */
+    }
+}
+
+/* Modern button with animation */
+.modern-button {
+    margin-top: 10px;
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #FF4081;
+    border: none;
+    border-radius: 50px;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeInButton 2s ease-out 3s forwards; /* Delayed button animation */
+    transition: background-color 0.3s ease;
+}
+
+.modern-button:hover {
+    background-color: #ff1744;
+}
+
+/* Button fade-in animation */
+@keyframes fadeInButton {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
