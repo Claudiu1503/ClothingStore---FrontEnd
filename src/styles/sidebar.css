@@ -19,7 +19,7 @@
     margin-bottom: 25%;
     cursor: pointer;
     text-align: center;
-    transition: color 0.3s, transform 0.3s ease;
+    transition: color 0.3s, transform 0.5s ease;
 }
 
 .sidebar ul li:hover {
