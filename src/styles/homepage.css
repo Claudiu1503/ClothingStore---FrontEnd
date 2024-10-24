@@ -38,11 +38,11 @@
 .animated-text {
     font-size: 70px;
     color: white;
-    text-shadow: 10px 10px 8px rgba(0, 0, 0, 0.5);
+    text-shadow: 10px 10px 8px rgba(0, 0, 0, 0.1%);
     font-weight: bold;
     opacity: 0;
     transform: scale(0.8); /* Start with a smaller size */
-    animation: fadeInMoveUpAndScale 3s ease-out forwards;
+    animation: fadeInMoveUpAndScale 2s ease-out forwards;
 }
 
 /* Combined animation: fade in, move up, and scale */
@@ -68,19 +68,21 @@
     font-size: 20px;
     font-weight: bold;
     color: white;
-    background-color: #FF4081;
+    background-color: #ffb340;
     border: none;
     border-radius: 50px;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
     opacity: 0;
-    animation: fadeInButton 2s ease-out 3s forwards; /* Delayed button animation */
+    animation: fadeInButton 1s ease-out 1s forwards; /* Delayed button animation */
     transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 .modern-button:hover {
-    background-color: #ff1744;
+    background-color: #c517ff;
+    transform: scale(1.1);
 }
 
 /* Button fade-in animation */
