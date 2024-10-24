@@ -14,9 +14,9 @@
 }
 
 .sidebar ul li {
-    margin-bottom: 10px;
+    margin-bottom: 15%;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s ease;
 }
 
 .sidebar ul li:hover {
