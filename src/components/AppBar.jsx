@@ -17,7 +17,9 @@ const AppBar = ({ isAuthenticated, userName, onSignOut }) => {
     return (
         <header className="app-bar">
             <div className="app-name" onClick={() => navigate('/')}>ClothingStore</div>
-            <input type="text" className="search-bar" placeholder="Search for products..." />
+            <div className="search-bar-container">
+                <input type="text" className="search-bar" placeholder="Search for products..."/>
+            </div>
             {isAuthenticated ? (
                 <div className="user-info">
                     <span onClick={handleUserClick} className="user-icon">
@@ -32,7 +34,9 @@ const AppBar = ({ isAuthenticated, userName, onSignOut }) => {
                     )}
                 </div>
             ) : (
-                <button className="login-button" onClick={() => navigate('/login')}>Login / Register</button>
+                <div className="login-button-container">
+                    <button className="login-button" onClick={() => navigate('/login')}>Login / Register</button>
+                </div>
             )}
         </header>
     );

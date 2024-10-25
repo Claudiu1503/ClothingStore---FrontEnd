@@ -3,7 +3,7 @@
 .app-bar {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px;
+    padding: 5px 15px;
     background-color: #333;
     color: #fff;
 }
@@ -13,28 +13,48 @@
     cursor: pointer;
     align-content: center;
     text-align: center;
+}
 
+.search-bar-container{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    padding-top: 15px;
 }
 
 .search-bar {
     width: 350px;
-    height: 30px;
-    padding: 10px;
+    height: 5px;
+    /*padding: 10px;*/
     border-radius: 50px;
     border: 1px solid #ccc;
     align-content: center;
     align-self: center;
     text-align: left;
+    padding-bottom: 15px;
+}
+
+.login-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
 
 .login-button {
     background-color: #ff4081;
     color: white;
     border: none;
-    padding: 15px 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    height: 50px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    align-content: center;
+    align-items: center;
 }
 
 .login-button:hover {

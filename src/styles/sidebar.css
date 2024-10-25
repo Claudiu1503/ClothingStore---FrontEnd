@@ -1,13 +1,13 @@
 .sidebar {
-    width: 150px;
-    padding: 40px;
+    width: 100px;
+    padding: 60px;
     background-color: #f4f4f4;
 }
 
 .sidebar h3 {
     margin-bottom: 50px;
     text-align: center;
-    color: #b908ff;
+    color: #ff5208;
 }
 
 .sidebar ul {
