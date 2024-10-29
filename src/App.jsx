@@ -5,9 +5,8 @@ import LoginPage from './pages/LoginPage';
 import ProductsPage from './pages/ProductsPage';
 import RegisterPage from './pages/RegisterPage';
 import ResetPasswordPage from './pages/ResetpasswordPage';
-import ProfilePage from './pages/ProfilePage'; // Import the ProfilePage
+import ProfilePage from './pages/ProfilePage';
 import { useState } from 'react';
-
 
 const App = () => {
     const location = useLocation();

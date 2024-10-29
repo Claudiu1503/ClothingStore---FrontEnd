@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../styles/profilepage.css';
+import {useNavigate} from "react-router-dom";
 
 const ProfilePage = () => {
     const [user, setUser] = useState({
@@ -18,6 +19,7 @@ const ProfilePage = () => {
         phone: ''
     });
 
+    const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
@@ -72,9 +74,6 @@ const ProfilePage = () => {
         }
     };
 
-    const handleHomeNavigation = () => {
-        history.push('/');
-    };
 
     return (
         <div className="profile-page">
@@ -111,7 +110,7 @@ const ProfilePage = () => {
                     ) : (
                         <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
                     )}
-                    <button className="home-button" onClick={handleHomeNavigation}>Home</button>
+                    <button className="home-button" onClick={() => navigate('/')}>Home</button>
                 </div>
             </div>
         </div>

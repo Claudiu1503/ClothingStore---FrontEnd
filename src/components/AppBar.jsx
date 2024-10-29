@@ -1,12 +1,12 @@
-// src/components/AppBar.js
-
 import '../styles/appbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import profileIcon from '/img/profileicon.png'; // Import the image
+import profileIcon from '/img/profileicon.png';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
-const AppBar = ({ isAuthenticated, userName, onSignOut }) => {
+const AppBar = () => {
+    const { user, logout } = useAuth(); // Obține utilizatorul din context
     const navigate = useNavigate();
     const [showOptions, setShowOptions] = useState(false);
 
@@ -18,18 +18,18 @@ const AppBar = ({ isAuthenticated, userName, onSignOut }) => {
         <header className="app-bar">
             <div className="app-name" onClick={() => navigate('/')}>ClothingStore</div>
             <div className="search-bar-container">
-                <input type="text" className="search-bar" placeholder="Search for products..."/>
+                <input type="text" className="search-bar" placeholder="Search for products..." />
             </div>
-            {isAuthenticated ? (
+            {user ? (
                 <div className="user-info">
                     <span onClick={handleUserClick} className="user-icon">
-                        <img src={profileIcon} alt="User Icon" className="user-icon-img" /> {/* Add class here */}
-                        {userName}
+                        <img src={profileIcon} alt="User Icon" className="user-icon-img" />
+                        {user.username}
                     </span>
                     {showOptions && (
                         <div className="user-options">
                             <button onClick={() => navigate('/profile')}>View Profile</button>
-                            <button onClick={onSignOut}>Sign Out</button>
+                            <button onClick={() => { logout(); navigate('/'); }}>Sign Out</button>
                         </div>
                     )}
                 </div>
