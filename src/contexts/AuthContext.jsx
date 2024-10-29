@@ -21,6 +21,8 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setUser(null);
         localStorage.removeItem('user'); // Elimină utilizatorul din localStorage
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
     };
 
     return (
