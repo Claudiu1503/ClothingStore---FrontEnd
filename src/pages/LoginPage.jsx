@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'; // Import PropTypes for validation
 import '../styles/loginpage.css';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 const LoginPage = ({ onLogin }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
+    const { login } = useAuth();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -32,6 +33,7 @@ const LoginPage = ({ onLogin }) => {
                 const data = await response.json();
                 console.log('Login successful:', data.message);
 
+                login({ email, username: data.username });
 
                 localStorage.setItem('email', email);
                 localStorage.setItem('password', password);
