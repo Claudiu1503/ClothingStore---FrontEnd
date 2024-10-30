@@ -1,8 +1,37 @@
-# React + Vite
+# Clothing Store Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Acest proiect reprezintă frontend-ul pentru un magazin de îmbrăcăminte, dezvoltat cu React și Vite. Aplicația permite utilizatorilor să navigheze prin produse, să se autentifice și să plaseze comenzi.
 
-Currently, two official plugins are available:
+## Tehnologii Utilizate
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- CSS pentru stilizare
+
+## Instalare
+
+1. Clonează repository-ul:
+   ```bash
+   git clone https://github.com/Claudiu1503/ClothingStore---FrontEnd.git
+   ```
+2. Navighează în directorul proiectului:
+   ```bash
+   cd ClothingStore---FrontEnd
+   ```
+3. Instalează dependențele:
+   ```bash
+   npm install
+   ```
+4. Pornește aplicația:
+   ```bash
+   npm run dev
+   ```
+5. Accesează aplicația în browser la [http://localhost:3000](http://localhost:3000).
+
+## Contribuții
+
+Dacă dorești să contribui la acest proiect, te rog să deschizi un issue sau un pull request.
+
+## Licență
+
+Acest proiect este licențiat sub Licența MIT. Vezi fișierul [LICENSE](LICENSE) pentru detalii.
