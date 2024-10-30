@@ -32,10 +32,11 @@ const LoginPage = ({ onLogin }) => {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Login successful:', data.message);
-                login({ email, username: data.username });
-
+                // login({ email, username: data.username });
+                login({ email, username: data.username, role: data.role });
                 localStorage.setItem('email', email);
                 localStorage.setItem('password', password);
+                localStorage.setItem('role', data.role);
 
                 const userName = data.username; // Get username from the response
                 onLogin(userName);

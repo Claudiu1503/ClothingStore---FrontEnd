@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import ResetPasswordPage from './pages/ResetpasswordPage';
 import ProfilePage from './pages/ProfilePage';
 import { useState } from 'react';
+import AdminProductsPage from './admin/AdminProductsPage';
 
 const App = () => {
     const location = useLocation();
@@ -41,6 +42,8 @@ const App = () => {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/admin/products" element={<AdminProductsPage />} />
+
             </Routes>
         </div>
     );
