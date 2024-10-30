@@ -158,12 +158,6 @@ const AdminProductsPage = () => {
                     value={newProduct.longDescription}
                     onChange={(e) => setNewProduct({...newProduct, longDescription: e.target.value})}
                 />
-                {/*<button type="submit">{newProduct.id ? 'Update Product' : 'Add Product'}</button>*/}
-                {/*{newProduct.id && (*/}
-                {/*    <button type="button" className="cancel-button" onClick={resetForm}>*/}
-                {/*        Cancel*/}
-                {/*    </button>*/}
-                {/*)}*/}
                 <div className="button-container">
                     <button type="submit" className="save-button">
                         {newProduct.id ? 'Update Product' : 'Add Product'}
