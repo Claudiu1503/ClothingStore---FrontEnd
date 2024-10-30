@@ -76,6 +76,25 @@ const AdminProductsPage = () => {
         }
     };
 
+    const handleDeleteProduct = async (productId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/product/delete/${productId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Basic ${btoa(`${user.email}:${localStorage.getItem('password')}`)}`,
+                },
+            });
+
+            if (response.ok) {
+                setProducts(products.filter(product => product.id !== productId));
+            } else {
+                console.error('Failed to delete product');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     const handleEditProduct = (product) => {
         setNewProduct(product);
     };
@@ -101,12 +120,12 @@ const AdminProductsPage = () => {
                     type="text"
                     placeholder="Product Name"
                     value={newProduct.name}
-                    onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
                     required
                 />
                 <select
                     value={newProduct.category}
-                    onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
                     required
                 >
                     {categories.map((category) => (
@@ -117,49 +136,72 @@ const AdminProductsPage = () => {
                     type="number"
                     placeholder="Price"
                     value={newProduct.price}
-                    onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+                    onChange={(e) => setNewProduct({...newProduct, price: parseFloat(e.target.value)})}
                     required
                 />
                 <input
                     type="number"
                     placeholder="Quantity"
                     value={newProduct.quantity}
-                    onChange={(e) => setNewProduct({ ...newProduct, quantity: parseInt(e.target.value) })}
+                    onChange={(e) => setNewProduct({...newProduct, quantity: parseInt(e.target.value)})}
                     required
                 />
                 <input
                     type="text"
                     placeholder="Short Description"
                     value={newProduct.shortDescription}
-                    onChange={(e) => setNewProduct({ ...newProduct, shortDescription: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, shortDescription: e.target.value})}
                     required
                 />
                 <textarea
                     placeholder="Long Description"
                     value={newProduct.longDescription}
-                    onChange={(e) => setNewProduct({ ...newProduct, longDescription: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, longDescription: e.target.value})}
                 />
-                <button type="submit">{newProduct.id ? 'Update Product' : 'Add Product'}</button>
-                {newProduct.id && (
-                    <button type="button" className="cancel-button" onClick={resetForm}>
-                        Cancel
+                {/*<button type="submit">{newProduct.id ? 'Update Product' : 'Add Product'}</button>*/}
+                {/*{newProduct.id && (*/}
+                {/*    <button type="button" className="cancel-button" onClick={resetForm}>*/}
+                {/*        Cancel*/}
+                {/*    </button>*/}
+                {/*)}*/}
+                <div className="button-container">
+                    <button type="submit" className="save-button">
+                        {newProduct.id ? 'Update Product' : 'Add Product'}
                     </button>
-                )}
+                    {newProduct.id && (
+                        <button type="button" className="cancel-button" onClick={resetForm}>
+                            Cancel
+                        </button>
+                    )}
+                </div>
+
             </form>
 
             <div className="product-list">
                 {products.map((product) => (
                     <div key={product.id} className="product-card" onClick={() => handleEditProduct(product)}>
+                        <p>ID: {product.id}</p> {/* Display the product ID */}
                         <h3>{product.name}</h3>
                         <p>Category: {product.category}</p>
                         <p>Price: ${product.price}</p>
                         <p>Quantity: {product.quantity}</p>
                         <p>{product.shortDescription}</p>
+                        <button
+                            className="delete-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteProduct(product.id);
+                            }}
+                        >
+                            🗑️
+                        </button>
                     </div>
                 ))}
             </div>
+
         </div>
     );
 };
 
 export default AdminProductsPage;
+
