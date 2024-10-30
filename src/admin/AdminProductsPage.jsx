@@ -3,16 +3,27 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import '../styles/adminProducts.css';
 
+const categories = [
+    "TSHIRTS", "JEANS", "SHORTS", "PANTS", "BAGS", "TOPS",
+    "BLOUSES", "HATS", "JACKETS", "DRESS", "SNEAKERS", "ACCESSORIES"
+];
+
 const AdminProductsPage = () => {
     const [products, setProducts] = useState([]);
-    const [newProduct, setNewProduct] = useState({ name: '', category: '', price: '', quantity: 0 });
-    const [image, setImage] = useState(null);
+    const [newProduct, setNewProduct] = useState({
+        id: null,
+        name: '',
+        category: 'TSHIRTS',
+        price: '',
+        quantity: 0,
+        shortDescription: '',
+        longDescription: ''
+    });
     const { user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
         const role = localStorage.getItem('role');
-        // Verificăm dacă utilizatorul are rolul de admin
         if (role !== 'ADMIN') {
             alert('Access Denied! Only admins can access this page.');
             navigate('/login');
@@ -26,7 +37,7 @@ const AdminProductsPage = () => {
             const response = await fetch('http://localhost:8080/product/get-all', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Basic ${btoa(`${user.email}:${user.password}`)}`,
+                    'Authorization': `Basic ${btoa(`${user.email}:${localStorage.getItem('password')}`)}`,
                 },
             });
             if (response.ok) {
@@ -43,52 +54,49 @@ const AdminProductsPage = () => {
     const handleAddProduct = async (e) => {
         e.preventDefault();
         try {
-            const formData = new FormData();
-            formData.append('name', newProduct.name);
-            formData.append('category', newProduct.category);
-            formData.append('price', newProduct.price);
-            formData.append('quantity', newProduct.quantity);
-            formData.append('image', image);
-
-            const response = await fetch('http://localhost:8080/product/create', {
-                method: 'POST',
+            const method = newProduct.id ? 'PUT' : 'POST';
+            const url = newProduct.id ? `http://localhost:8080/product/update/${newProduct.id}` : 'http://localhost:8080/product/create';
+            const response = await fetch(url, {
+                method,
                 headers: {
-                    'Authorization': `Basic ${btoa(`${user.email}:${user.password}`)}`,
+                    'Authorization': `Basic ${btoa(`${user.email}:${localStorage.getItem('password')}`)}`,
+                    'Content-Type': 'application/json',
                 },
-                body: formData,
+                body: JSON.stringify(newProduct),
             });
 
             if (response.ok) {
-                setNewProduct({ name: '', category: '', price: '', quantity: 0 });
-                setImage(null);
+                resetForm();
                 fetchProducts();
-                alert('Product added successfully!');
             } else {
-                console.error('Failed to add product');
+                console.error('Failed to add or update product');
             }
         } catch (error) {
             console.error('Error:', error);
         }
     };
 
+    const handleEditProduct = (product) => {
+        setNewProduct(product);
+    };
+
+    const resetForm = () => {
+        setNewProduct({
+            id: null,
+            name: '',
+            category: 'TSHIRTS',
+            price: '',
+            quantity: 0,
+            shortDescription: '',
+            longDescription: ''
+        });
+    };
+
     return (
         <div className="admin-products-page">
             <h2>Admin Products</h2>
-
-            <div className="product-list">
-                {products.map((product) => (
-                    <div key={product.id} className="product-item">
-                        <h3>{product.name}</h3>
-                        <p>Category: {product.category}</p>
-                        <p>Price: ${product.price}</p>
-                        <p>Quantity: {product.quantity}</p>
-                        {product.image && <img src={`/images/${product.image}`} alt={product.name} />}
-                    </div>
-                ))}
-            </div>
-
             <form className="add-product-form" onSubmit={handleAddProduct}>
-                <h3>Add New Product</h3>
+                <h3>{newProduct.id ? 'Edit Product' : 'Add New Product'}</h3>
                 <input
                     type="text"
                     placeholder="Product Name"
@@ -96,13 +104,15 @@ const AdminProductsPage = () => {
                     onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
                     required
                 />
-                <input
-                    type="text"
-                    placeholder="Category"
+                <select
                     value={newProduct.category}
                     onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
                     required
-                />
+                >
+                    {categories.map((category) => (
+                        <option key={category} value={category}>{category}</option>
+                    ))}
+                </select>
                 <input
                     type="number"
                     placeholder="Price"
@@ -118,12 +128,36 @@ const AdminProductsPage = () => {
                     required
                 />
                 <input
-                    type="file"
-                    onChange={(e) => setImage(e.target.files[0])}
+                    type="text"
+                    placeholder="Short Description"
+                    value={newProduct.shortDescription}
+                    onChange={(e) => setNewProduct({ ...newProduct, shortDescription: e.target.value })}
                     required
                 />
-                <button type="submit">Add Product</button>
+                <textarea
+                    placeholder="Long Description"
+                    value={newProduct.longDescription}
+                    onChange={(e) => setNewProduct({ ...newProduct, longDescription: e.target.value })}
+                />
+                <button type="submit">{newProduct.id ? 'Update Product' : 'Add Product'}</button>
+                {newProduct.id && (
+                    <button type="button" className="cancel-button" onClick={resetForm}>
+                        Cancel
+                    </button>
+                )}
             </form>
+
+            <div className="product-list">
+                {products.map((product) => (
+                    <div key={product.id} className="product-card" onClick={() => handleEditProduct(product)}>
+                        <h3>{product.name}</h3>
+                        <p>Category: {product.category}</p>
+                        <p>Price: ${product.price}</p>
+                        <p>Quantity: {product.quantity}</p>
+                        <p>{product.shortDescription}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
