@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user'); // Elimină utilizatorul din localStorage
         localStorage.removeItem('email');
         localStorage.removeItem('password');
+        localStorage.removeItem('role');
     };
 
     return (
