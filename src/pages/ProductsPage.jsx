@@ -41,6 +41,8 @@ const ProductsPage = () => {
                             />
                             <h3>{product.name}</h3>
                             <p>Category: {product.category}</p>
+                            <p>Gender: {product.gender}</p>
+                            <p>Color: {product.color}</p>
                             <p>Price: ${product.price}</p>
                             <p>{product.shortDescription}</p>
                         </div>

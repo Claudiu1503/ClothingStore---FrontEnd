@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +7,15 @@ import '../styles/adminProducts.css';
 const categories = [
     "TSHIRTS", "JEANS", "SHORTS", "PANTS", "BAGS", "TOPS",
     "BLOUSES", "HATS", "JACKETS", "DRESS", "SNEAKERS", "ACCESSORIES"
+];
+
+const colors = [
+    "WHITE", "BLACK", "BLUE", "RED", "GREEN", "YELLOW",
+    "PURPLE", "PINK", "ORANGE", "BROWN", "GREY"
+];
+
+const genders = [
+    "MALE", "FEMALE", "UNISEX"
 ];
 
 const AdminProductsPage = () => {
@@ -17,7 +27,9 @@ const AdminProductsPage = () => {
         price: '',
         quantity: 0,
         shortDescription: '',
-        longDescription: ''
+        longDescription: '',
+        color: 'WHITE',
+        gender: 'UNISEX'
     });
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -107,7 +119,9 @@ const AdminProductsPage = () => {
             price: '',
             quantity: 0,
             shortDescription: '',
-            longDescription: ''
+            longDescription: '',
+            color: 'WHITE',
+            gender: 'UNISEX'
         });
     };
 
@@ -120,43 +134,61 @@ const AdminProductsPage = () => {
                     type="text"
                     placeholder="Product Name"
                     value={newProduct.name}
-                    onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
+                    onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
                     required
                 />
                 <select
                     value={newProduct.category}
-                    onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
+                    onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
                     required
                 >
                     {categories.map((category) => (
                         <option key={category} value={category}>{category}</option>
                     ))}
                 </select>
+                <select
+                    value={newProduct.color}
+                    onChange={(e) => setNewProduct({ ...newProduct, color: e.target.value })}
+                    required
+                >
+                    {colors.map((color) => (
+                        <option key={color} value={color}>{color}</option>
+                    ))}
+                </select>
+                <select
+                    value={newProduct.gender}
+                    onChange={(e) => setNewProduct({ ...newProduct, gender: e.target.value })}
+                    required
+                >
+                    {genders.map((gender) => (
+                        <option key={gender} value={gender}>{gender}</option>
+                    ))}
+                </select>
                 <input
                     type="number"
                     placeholder="Price"
                     value={newProduct.price}
-                    onChange={(e) => setNewProduct({...newProduct, price: parseFloat(e.target.value)})}
+                    onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
                     required
                 />
                 <input
                     type="number"
                     placeholder="Quantity"
                     value={newProduct.quantity}
-                    onChange={(e) => setNewProduct({...newProduct, quantity: parseInt(e.target.value)})}
+                    onChange={(e) => setNewProduct({ ...newProduct, quantity: parseInt(e.target.value) })}
                     required
                 />
                 <input
                     type="text"
                     placeholder="Short Description"
                     value={newProduct.shortDescription}
-                    onChange={(e) => setNewProduct({...newProduct, shortDescription: e.target.value})}
+                    onChange={(e) => setNewProduct({ ...newProduct, shortDescription: e.target.value })}
                     required
                 />
                 <textarea
                     placeholder="Long Description"
                     value={newProduct.longDescription}
-                    onChange={(e) => setNewProduct({...newProduct, longDescription: e.target.value})}
+                    onChange={(e) => setNewProduct({ ...newProduct, longDescription: e.target.value })}
                 />
                 <div className="button-container">
                     <button type="submit" className="save-button">
@@ -168,15 +200,16 @@ const AdminProductsPage = () => {
                         </button>
                     )}
                 </div>
-
             </form>
 
             <div className="product-list">
                 {products.map((product) => (
                     <div key={product.id} className="product-card" onClick={() => handleEditProduct(product)}>
-                        <p>ID: {product.id}</p> {/* Display the product ID */}
+                        <p>ID: {product.id}</p>
                         <h3>{product.name}</h3>
                         <p>Category: {product.category}</p>
+                        <p>Color: {product.color}</p>
+                        <p>Gender: {product.gender}</p>
                         <p>Price: ${product.price}</p>
                         <p>Quantity: {product.quantity}</p>
                         <p>{product.shortDescription}</p>
@@ -192,10 +225,8 @@ const AdminProductsPage = () => {
                     </div>
                 ))}
             </div>
-
         </div>
     );
 };
 
 export default AdminProductsPage;
-
