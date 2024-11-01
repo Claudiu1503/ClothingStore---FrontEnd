@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +19,8 @@ const genders = [
 
 const AdminProductsPage = () => {
     const [products, setProducts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [newProduct, setNewProduct] = useState({
         id: null,
         name: '',
@@ -44,6 +45,14 @@ const AdminProductsPage = () => {
         fetchProducts();
     }, [user, navigate]);
 
+    useEffect(() => {
+        setFilteredProducts(
+            products.filter((product) =>
+                product.name.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        );
+    }, [searchTerm, products]);
+
     const fetchProducts = async () => {
         try {
             const response = await fetch('http://localhost:8080/product/get-all', {
@@ -55,6 +64,7 @@ const AdminProductsPage = () => {
             if (response.ok) {
                 const data = await response.json();
                 setProducts(data);
+                setFilteredProducts(data); // Initialize filtered products
             } else {
                 console.error('Failed to fetch products');
             }
@@ -128,6 +138,13 @@ const AdminProductsPage = () => {
     return (
         <div className="admin-products-page">
             <h2>Admin Products</h2>
+            <input
+                type="text"
+                placeholder="Search products by name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-bar"
+            />
             <form className="add-product-form" onSubmit={handleAddProduct}>
                 <h3>{newProduct.id ? 'Edit Product' : 'Add New Product'}</h3>
                 <input
@@ -203,7 +220,7 @@ const AdminProductsPage = () => {
             </form>
 
             <div className="product-list">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                     <div key={product.id} className="product-card" onClick={() => handleEditProduct(product)}>
                         <p>ID: {product.id}</p>
                         <h3>{product.name}</h3>
@@ -230,3 +247,4 @@ const AdminProductsPage = () => {
 };
 
 export default AdminProductsPage;
+
