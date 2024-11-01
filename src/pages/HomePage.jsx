@@ -7,7 +7,7 @@ const HomePage = () => {
 
     useEffect(() => {
         // Display the button after the text animation ends (3s delay)
-        const timer = setTimeout(() => setShowButton(true), 3000);
+        const timer = setTimeout(() => setShowButton(true), 750);
         return () => clearTimeout(timer);
     }, []);
 
