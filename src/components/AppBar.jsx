@@ -17,9 +17,9 @@ const AppBar = () => {
     return (
         <header className="app-bar">
             <div className="app-name" onClick={() => navigate('/')}>ClothingStore</div>
-            <div className="search-bar-container">
-                <input type="text" className="search-bar" placeholder="Search for products..." />
-            </div>
+            {/*<div className="search-bar-container">*/}
+            {/*    <input type="text" className="search-bar" placeholder="Search for products..." />*/}
+            {/*</div>*/}
             {user ? (
                 <div className="user-info">
                     <span onClick={handleUserClick} className="user-icon">

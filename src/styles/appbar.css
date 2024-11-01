@@ -15,26 +15,6 @@
     text-align: center;
 }
 
-.search-bar-container{
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    padding-top: 15px;
-}
-
-.search-bar {
-    width: 350px;
-    height: 5px;
-    /*padding: 10px;*/
-    border-radius: 50px;
-    border: 1px solid #ccc;
-    align-content: center;
-    align-self: center;
-    text-align: left;
-    padding-bottom: 15px;
-}
-
 .login-button-container {
     display: flex;
     flex-direction: row;
@@ -73,9 +53,9 @@
 }
 
 .user-icon-img {
-    width: 30px; /* Set the desired width */
-    height: 30px; /* Set the desired height */
-    margin-right: 5px; /* Space between icon and username */
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
 }
 
 .user-options {

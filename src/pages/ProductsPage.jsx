@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/products.css';
 
 const ProductsPage = () => {
@@ -154,11 +155,19 @@ const ProductsPage = () => {
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
                             <div key={product.id} className="product-card">
-                                <img
-                                    src={`/productimages/${product.id}.png`}
-                                    alt={product.name}
-                                    onError={(e) => { e.target.src = '/productimages/default.png'; }}
-                                />
+                                {/*<img*/}
+                                {/*    src={`/productimages/${product.id}.png`}*/}
+                                {/*    alt={product.name}*/}
+                                {/*    onError={(e) => { e.target.src = '/productimages/default.png'; }}*/}
+                                {/*/>*/}
+                                <Link to={`/product/${product.id}`}>
+                                    <img
+                                        src={`/productimages/${product.id}.png`}
+                                        alt={product.name}
+                                        onError={(e) => { e.target.src = '/productimages/default.png'; }}
+                                    />
+                                    <h3>{product.name}</h3>
+                                </Link>
                                 <h3>{product.name}</h3>
                                 <p>Category: {product.category}</p>
                                 <p>Gender: {product.gender}</p>
