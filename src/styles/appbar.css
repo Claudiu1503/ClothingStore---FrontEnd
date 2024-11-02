@@ -3,9 +3,39 @@
 .app-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 5px 15px;
     background-color: #333;
     color: #fff;
+    position: relative;
+}
+
+.button-sidebar {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.dropdown-sidebar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    color: #000000;
+    box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 1px;
+    padding: 5px;
+    display: block;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.app-name-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
 
 .app-name {

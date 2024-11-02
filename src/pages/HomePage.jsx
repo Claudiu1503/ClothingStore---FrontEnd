@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Sidebar from '../components/Sidebar';
 import '../styles/homepage.css';
 
 const HomePage = () => {
@@ -13,7 +12,6 @@ const HomePage = () => {
 
     return (
         <div className="home-container">
-            <Sidebar />
             <div className="main-content">
                 <div className="image-container">
                     <img src="/img/homepic.jpg" alt="Fashion Design" className="fashion-image" />

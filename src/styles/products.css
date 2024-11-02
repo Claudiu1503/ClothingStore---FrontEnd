@@ -4,57 +4,96 @@
 }
 
 .filter-menu {
-    width: 220px;
-    padding: 10px;
-    background-color: #f6f6f6;
-    border-radius: 8px;
-    /*margin-right: 2px;*/
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-right: 20px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     font-size: 0.85rem;
 }
 
 .filter-menu h3, .filter-menu h4 {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ddd;
 }
 
-.compact-checkbox {
+.filter-group {
+    margin-bottom: 12px;
+}
+
+.compact-checkbox, .color-checkbox {
+    display: block;
+    margin: 5px 0;
+}
+
+.compact-checkbox label, .color-checkbox label {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 3px;
 }
 
-.compact-checkbox input[type="checkbox"] {
-    margin-left: -70px;
-}
-
-.color-checkbox {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /*margin-bottom: 3px;*/
+.compact-checkbox input[type="checkbox"],
+.color-checkbox input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1);
 }
 
 .color-box {
-    display: inline-block;
     width: 12px;
     height: 12px;
-    border-radius: 4px;
-    margin-left: 5px;
+    border-radius: 3px;
+    margin-right: 6px;
+    border: 1px solid #ddd;
 }
 
-.white { background-color: #ffffff; border: 1px solid #ddd; }
-.black { background-color: #000000; }
-.blue { background-color: #0000ff; }
-.red { background-color: #ff0000; }
-.green { background-color: #00ff00; }
-.yellow { background-color: #ffff00; }
-.purple { background-color: #800080; }
-.pink { background-color: #ff69b4; }
-.orange { background-color: #ffa500; }
-.brown { background-color: #a52a2a; }
-.grey { background-color: #808080; }
+.price-inputs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.price-inputs input {
+    width: 45%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.85rem;
+    transition: border-color 0.2s ease;
+}
+
+.price-inputs input:focus {
+    border-color: #007bff;
+}
+
+.search-bar input {
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    transition: border-color 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.search-bar input:focus {
+    border-color: #ffdf40;
+}
+
+.color-box.white { background-color: #ffffff; }
+.color-box.black { background-color: #000000; }
+.color-box.blue { background-color: #0000ff; }
+.color-box.red { background-color: #ff0000; }
+.color-box.green { background-color: #00ff00; }
+.color-box.yellow { background-color: #ffff00; }
+.color-box.purple { background-color: #800080; }
+.color-box.pink { background-color: #ff69b4; }
+.color-box.orange { background-color: #ffa500; }
+.color-box.brown { background-color: #a52a2a; }
+.color-box.grey { background-color: #808080; }
+
 
 .price-inputs {
     display: flex;
