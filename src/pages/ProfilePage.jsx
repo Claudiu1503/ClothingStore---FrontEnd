@@ -77,6 +77,9 @@ const ProfilePage = () => {
 
     return (
         <div className="profile-page">
+            <div className="home-button-container">
+                <button className="home-button" onClick={() => navigate('/')}>Home</button>
+            </div>
             <h2>User Profile</h2>
             <div className="profile-container">
                 <div className="profile-info">
@@ -110,7 +113,6 @@ const ProfilePage = () => {
                     ) : (
                         <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
                     )}
-                    <button className="home-button" onClick={() => navigate('/')}>Home</button>
                 </div>
             </div>
         </div>
