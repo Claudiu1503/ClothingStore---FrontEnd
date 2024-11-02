@@ -128,3 +128,7 @@
         transform: translateY(0);
     }
 }
+
+.user-icon-img {
+    border-radius: 50%;
+}

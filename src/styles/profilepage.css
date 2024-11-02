@@ -29,7 +29,8 @@ h2 {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     padding: 2rem;
-    width: 50%; /* Adjust width as needed */
+    width: 90%; /* Adjust width for better responsiveness */
+    max-width: 600px; /* Set a max width for larger screens */
     animation: profile-container-appear 0.5s ease-in-out forwards; /* Slide-in animation */
 }
 
@@ -54,7 +55,8 @@ h2 {
 }
 
 .profile-field {
-    width: 45%; /* Adjust width as needed */
+    width: 100%; /* Adjust to full width on smaller screens */
+    max-width: 280px; /* Limit width for larger screens */
     margin-bottom: 1rem;
 }
 
@@ -115,4 +117,36 @@ button {
 
 .edit-button:hover {
     background-color: #2980b9; /* Darker blue on hover */
+}
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease; /* Smooth transition on border */
+}
+
+input[type="file"] {
+    margin-top: 10px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 95%; /* Increase width on smaller screens */
+    }
+
+    .profile-field {
+        width: 100%; /* Full width on small screens */
+    }
 }

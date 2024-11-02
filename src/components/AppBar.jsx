@@ -12,6 +12,8 @@ const AppBar = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [showSideBar, setShowSideBar] = useState(false);
 
+    const profileImage = localStorage.getItem('profileImage');
+
     return (
         <header className="app-bar">
             <button className="button-sidebar" onClick={() => setShowSideBar(!showSideBar)}>|||</button>
@@ -22,7 +24,11 @@ const AppBar = () => {
                 <div className="user-info">
                     <span onMouseEnter={() => setShowOptions(true)}
                           onMouseLeave={() => setShowOptions(false)} className="user-icon">
-                        <img src={profileIcon} alt="User Icon" className="user-icon-img" />
+                        <img
+                            src={profileImage || profileIcon} // Use user's profile image or fallback to default
+                            alt="User Icon"
+                            className="user-icon-img"
+                        />
                         {user.username}
                     </span>
                     {showOptions && (

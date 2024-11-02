@@ -22,6 +22,8 @@ const ProfilePage = () => {
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
 
+    const [profileImage, setProfileImage] = useState(localStorage.getItem('profileImage') || null);
+
     useEffect(() => {
         const fetchUserData = async () => {
             const email = localStorage.getItem('email');
@@ -74,6 +76,18 @@ const ProfilePage = () => {
         }
     };
 
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfileImage(reader.result);
+                localStorage.setItem('profileImage', reader.result); // Stocăm imaginea în local storage
+            };
+            reader.readAsDataURL(file); // Convertim imaginea în format base64
+        }
+    };
+
 
     return (
         <div className="profile-page">
@@ -82,6 +96,23 @@ const ProfilePage = () => {
             </div>
             <h2>User Profile</h2>
             <div className="profile-container">
+                <div className="profile-image">
+                    <img
+                        src={profileImage || '/img/profileicon.png'} // Folosește imaginea de profil sau imaginea default
+                        alt="Profile"
+                        className="profile-pic"
+                        onError={(e) => {
+                            e.target.src = '/img/profileicon.png';
+                        }} // Fallback la imaginea default
+                    />
+                    {isEditing && (
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                        />
+                    )}
+                </div>
                 <div className="profile-info">
                     {Object.entries(user).map(([key, value]) => (
                         <div key={key} className="profile-field">
