@@ -154,27 +154,19 @@ const ProductsPage = () => {
                 <div className="product-list">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
-                            <div key={product.id} className="product-card">
-                                {/*<img*/}
-                                {/*    src={`/productimages/${product.id}.png`}*/}
-                                {/*    alt={product.name}*/}
-                                {/*    onError={(e) => { e.target.src = '/productimages/default.png'; }}*/}
-                                {/*/>*/}
-                                <Link to={`/product/${product.id}`}>
-                                    <img
-                                        src={`/productimages/${product.id}.png`}
-                                        alt={product.name}
-                                        onError={(e) => { e.target.src = '/productimages/default.png'; }}
-                                    />
-                                    <h3>{product.name}</h3>
-                                </Link>
+                            <Link key={product.id} to={`/product/${product.id}`} className="product-card">
+                                <img
+                                    src={`/productimages/${product.id}.png`}
+                                    alt={product.name}
+                                    onError={(e) => { e.target.src = '/productimages/default.png'; }}
+                                />
                                 <h3>{product.name}</h3>
                                 <p>Category: {product.category}</p>
                                 <p>Gender: {product.gender}</p>
                                 <p>Color: {product.color}</p>
                                 <p>Price: ${product.price}</p>
                                 <p>{product.shortDescription}</p>
-                            </div>
+                            </Link>
                         ))
                     ) : (
                         <p>No products found.</p>
