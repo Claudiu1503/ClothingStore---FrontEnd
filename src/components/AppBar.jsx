@@ -10,9 +10,9 @@ const AppBar = () => {
     const navigate = useNavigate();
     const [showOptions, setShowOptions] = useState(false);
 
-    const handleUserClick = () => {
-        setShowOptions(!showOptions);
-    };
+    // const handleUserClick = () => {
+    //     setShowOptions(!showOptions);
+    // };
 
     return (
         <header className="app-bar">
@@ -22,12 +22,14 @@ const AppBar = () => {
             {/*</div>*/}
             {user ? (
                 <div className="user-info">
-                    <span onClick={handleUserClick} className="user-icon">
+                    <span onMouseEnter={() => setShowOptions(true)}
+                          onMouseLeave={() => setShowOptions(false)} className="user-icon">
                         <img src={profileIcon} alt="User Icon" className="user-icon-img" />
                         {user.username}
                     </span>
                     {showOptions && (
-                        <div className="user-options">
+                        <div className="user-options" onMouseEnter={() => setShowOptions(true)}
+                             onMouseLeave={() => setShowOptions(false)}>
                             <button onClick={() => navigate('/profile')}>View Profile</button>
                             <button onClick={() => { logout(); navigate('/'); }}>Sign Out</button>
                         </div>
