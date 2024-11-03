@@ -10,6 +10,9 @@ const ProductsPage = () => {
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedGender, setSelectedGender] = useState([]);
     const [priceRange, setPriceRange] = useState([0, 15000]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [showBackToTop, setShowBackToTop] = useState(false); // State for the Back to Top button
+    const itemsPerPage = 10;
 
     useEffect(() => {
         fetchProducts();
@@ -17,7 +20,24 @@ const ProductsPage = () => {
 
     useEffect(() => {
         filterProducts();
+        setCurrentPage(1);
     }, [searchTerm, selectedCategories, selectedColors, selectedGender, priceRange, products]);
+
+    // New effect for handling scroll events
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 300) {
+                setShowBackToTop(true);
+            } else {
+                setShowBackToTop(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const fetchProducts = async () => {
         try {
@@ -79,6 +99,22 @@ const ProductsPage = () => {
         );
 
         setFilteredProducts(filtered);
+    };
+
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const displayedProducts = filteredProducts.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
@@ -152,13 +188,15 @@ const ProductsPage = () => {
                 </div>
 
                 <div className="product-list">
-                    {filteredProducts.length > 0 ? (
-                        filteredProducts.map((product) => (
+                    {displayedProducts.length > 0 ? (
+                        displayedProducts.map((product) => (
                             <Link key={product.id} to={`/product/${product.id}`} className="product-card">
                                 <img
                                     src={`/productimages/${product.id}-1.png`}
                                     alt={product.name}
-                                    onError={(e) => { e.target.src = '/productimages/default.png'; }}
+                                    onError={(e) => {
+                                        e.target.src = '/productimages/default.png';
+                                    }}
                                 />
                                 <h3>{product.name}</h3>
                                 <p>Brand: {product.brand}</p>
@@ -173,6 +211,24 @@ const ProductsPage = () => {
                         <p>No products found.</p>
                     )}
                 </div>
+                {/* Pagination Controls */}
+                <div className="pagination">
+                    {[...Array(totalPages).keys()].map((pageNumber) => (
+                        <button
+                            key={pageNumber + 1}
+                            className={`page-button ${currentPage === pageNumber + 1 ? 'active' : ''}`}
+                            onClick={() => handlePageChange(pageNumber + 1)}
+                        >
+                            {pageNumber + 1}
+                        </button>
+                    ))}
+                </div>
+                {/*Back to top button*/}
+                {showBackToTop && (
+                    <button className="back-to-top" onClick={scrollToTop}>
+                        ↑ Top
+                    </button>
+                )}
             </main>
         </div>
     );
