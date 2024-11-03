@@ -156,7 +156,7 @@ const ProductsPage = () => {
                         filteredProducts.map((product) => (
                             <Link key={product.id} to={`/product/${product.id}`} className="product-card">
                                 <img
-                                    src={`/productimages/${product.id}.png`}
+                                    src={`/productimages/${product.id}-1.png`}
                                     alt={product.name}
                                     onError={(e) => { e.target.src = '/productimages/default.png'; }}
                                 />
