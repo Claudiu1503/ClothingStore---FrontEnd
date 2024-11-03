@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/singleProduct.css';
 
 const SingleProductPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(1);
     const [imageError, setImageError] = useState(false);
@@ -45,9 +46,6 @@ const SingleProductPage = () => {
 
     const handleAddToCart = () => {
         if (selectedSize) {
-            ///TODO
-            // Aici trebuie implementata adaugarea in cos
-
             alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
         } else {
             alert('Please select a size');
@@ -60,6 +58,10 @@ const SingleProductPage = () => {
 
     return (
         <div className="single-product-page">
+            <button className="back-to-products-button" onClick={() => navigate('/products')}>
+                Back to Products
+            </button>
+
             <div className="product-image-carousel">
                 <button onClick={handlePreviousImage} className="carousel-button">{"<"}</button>
                 <img
@@ -97,9 +99,22 @@ const SingleProductPage = () => {
 
                 <div className="product-buttons">
                     <button onClick={handleAddToCart} className="add-to-cart-button">Add to Cart</button>
-                    <button onClick={toggleFavorite} className="favorite-button">
-                        {isFavorite ? "❤️" : "🤍"}
-                    </button>
+                    <div className="favorite-button-container">
+                        <button onClick={toggleFavorite} className="favorite-button">
+                            {isFavorite ? "❤️" : "🤍"}
+                        </button>
+                    </div>
+                </div>
+                <div className="delivery-info">
+                    <div className="delivery-card">🚚 Free delivery
+                        <div className="delivery-card__info">FREE</div>
+                    </div>
+                    <div className="delivery-card">
+                        <div className="delivery-text"> 🔄 100 days return policy</div>
+                        <div className="delivery-info-container">
+                            <div className="delivery-card-info">Fast delivery</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
