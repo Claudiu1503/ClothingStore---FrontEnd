@@ -1,6 +1,5 @@
 .single-product-page {
     display: flex;
-    align-items: center;
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -9,15 +8,34 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.single-product-page img {
+.product-image-carousel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-right: 1px solid #ddd;
+    padding-right: 2rem;
+}
+
+.product-image-carousel img {
     max-width: 400px;
     width: 100%;
     border-radius: 8px;
-    margin-right: 2rem;
+}
+
+.carousel-button {
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    padding: 0.5rem;
+    color: #333;
 }
 
 .product-details {
-    max-width: 600px;
+    flex: 1;
+    padding-left: 2rem;
 }
 
 .product-details h1 {
@@ -32,14 +50,57 @@
     margin-bottom: 0.5rem;
 }
 
-.product-details p:last-child {
-    font-size: 1rem;
-    color: #444;
-    line-height: 1.6;
-    margin-top: 1rem;
-}
-
-.product-price-text{
+.product-price-text {
     font-weight: bold;
     font-size: 1.6rem;
+    color: #444;
+}
+
+.product-size-select {
+    margin: 1rem 0;
+}
+
+.product-size-select label {
+    font-size: 1.1rem;
+    color: #333;
+    margin-right: 0.5rem;
+}
+
+.product-size-select select {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.product-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.add-to-cart-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-button:hover {
+    background-color: #0056b3;
+}
+
+.favorite-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: red;
+    transition: color 0.3s;
+}
+
+.favorite-button:hover {
+    color: darkred;
 }

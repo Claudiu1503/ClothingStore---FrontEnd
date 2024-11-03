@@ -149,9 +149,10 @@
 
 .product-card img {
     max-width: 100%;
-    height: auto;
+    height: 260px;
+    width: 200px;
     border-radius: 8px;
-
+    object-fit: contain;
 }
 
 
