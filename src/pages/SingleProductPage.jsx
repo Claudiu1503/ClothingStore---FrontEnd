@@ -74,6 +74,7 @@ const SingleProductPage = () => {
 
             <div className="product-details">
                 <h1>{product.name}</h1>
+                <p>Brand: {product.brand}</p>
                 <p>Category: {product.category}</p>
                 <p>Gender: {product.gender}</p>
                 <p>Color: {product.color}</p>
