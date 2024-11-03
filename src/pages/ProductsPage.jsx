@@ -12,7 +12,7 @@ const ProductsPage = () => {
     const [priceRange, setPriceRange] = useState([0, 15000]);
     const [currentPage, setCurrentPage] = useState(1);
     const [showBackToTop, setShowBackToTop] = useState(false); // State for the Back to Top button
-    const itemsPerPage = 10;
+    const itemsPerPage = 24;
 
     useEffect(() => {
         fetchProducts();

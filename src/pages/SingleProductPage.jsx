@@ -94,6 +94,7 @@ const SingleProductPage = () => {
                         <option value="M">M</option>
                         <option value="L">L</option>
                         <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
                     </select>
                 </div>
 

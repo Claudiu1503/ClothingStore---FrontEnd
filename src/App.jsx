@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage';
 import { useState } from 'react';
 import AdminProductsPage from './admin/AdminProductsPage';
 import SingleProductPage from './pages/SingleProductPage';
+import NewPasswordPage from './pages/NewPasswordPage';
 
 const App = () => {
     const location = useLocation();
@@ -45,6 +46,7 @@ const App = () => {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/admin/products" element={<AdminProductsPage />} />
                 <Route path="/product/:id" element={<SingleProductPage />} />
+                <Route path="/new-password" element={<NewPasswordPage />} />
 
             </Routes>
         </div>

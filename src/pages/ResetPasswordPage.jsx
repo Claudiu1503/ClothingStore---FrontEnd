@@ -8,10 +8,24 @@ const ResetPasswordPage = () => {
     const [countdown, setCountdown] = useState(0);
     const navigate = useNavigate();
 
-    const handleResetPassword = (e) => {
+    const handleResetPassword = async (e) => {
         e.preventDefault();
-        setMessage('An email has been sent for password reset.');
-        setCountdown(6); // Set countdown to 5 seconds
+        try {
+            const response = await fetch('http://localhost:8080/reset/request/password-change', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
+            if (response.ok) {
+                setMessage('An email has been sent for password reset.');
+                setCountdown(5);
+            } else {
+                setMessage('Error: Unable to send reset email. Try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setMessage('An unexpected error occurred.');
+        }
     };
 
     useEffect(() => {
@@ -20,9 +34,8 @@ const ResetPasswordPage = () => {
                 setCountdown((prev) => prev - 1);
             }, 1000);
 
-            // Redirect after countdown
             if (countdown === 1) {
-                navigate('/login'); // Redirect to login page
+                navigate('/new-password');
             }
 
             return () => clearInterval(timer);
@@ -31,12 +44,8 @@ const ResetPasswordPage = () => {
 
     return (
         <div className="reset-password-page">
-            <button className="back-button" onClick={() => navigate(-1)}>
-                Back
-            </button>
-            <button className="home-button" onClick={() => navigate('/')}>
-                Home
-            </button>
+            <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+            <button className="home-button" onClick={() => navigate('/')}>Home</button>
             <div className="reset-password-container">
                 <h2>Reset Password</h2>
                 <form onSubmit={handleResetPassword}>
@@ -46,14 +55,10 @@ const ResetPasswordPage = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <button type="submit" className="reset-button">
-                        Send Reset Email
-                    </button>
+                    <button type="submit" className="reset-button">Send Reset Email</button>
                 </form>
                 {message && <p className="message">{message}</p>}
-                {countdown > 0 && (
-                    <p className="countdown">Redirecting in {countdown} seconds...</p>
-                )}
+                {countdown > 0 && <p className="countdown">Redirecting in {countdown} seconds...</p>}
             </div>
         </div>
     );
