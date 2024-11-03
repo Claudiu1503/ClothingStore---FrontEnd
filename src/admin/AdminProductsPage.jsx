@@ -16,6 +16,15 @@ const colors = [
 const genders = [
     "MALE", "FEMALE", "UNISEX"
 ];
+const brands = [
+    "ADIDAS", "AMIRI", "ARMANI", "BALENCIAGA", "BURBERRY", "CA",
+    "CALVINKLEIN", "CHANNEL", "CHRISTIANDIOR", "CHAMPION", "DOLCEGABBANA",
+    "DSQUARED2", "FENDI", "GIVENCHY", "GUCCI", "HERMES", "HM",
+    "HUGOBOSS", "JORDAN", "LACOSTE", "LOUISVUITTON", "MONCLER", "NEWBALANCE",
+    "NEWYORKER", "NIKE", "PRADA", "PUMA", "ROLEX", "TOMMYHILFIGER",
+    "VERSACE", "VICTORIA", "WIKIKI", "ZARA"
+];
+
 
 const AdminProductsPage = () => {
     const [products, setProducts] = useState([]);
@@ -151,12 +160,12 @@ const AdminProductsPage = () => {
                     type="text"
                     placeholder="Product Name"
                     value={newProduct.name}
-                    onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
                     required
                 />
                 <select
                     value={newProduct.category}
-                    onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
                     required
                 >
                     {categories.map((category) => (
@@ -165,7 +174,7 @@ const AdminProductsPage = () => {
                 </select>
                 <select
                     value={newProduct.color}
-                    onChange={(e) => setNewProduct({ ...newProduct, color: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, color: e.target.value})}
                     required
                 >
                     {colors.map((color) => (
@@ -174,38 +183,47 @@ const AdminProductsPage = () => {
                 </select>
                 <select
                     value={newProduct.gender}
-                    onChange={(e) => setNewProduct({ ...newProduct, gender: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, gender: e.target.value})}
                     required
                 >
                     {genders.map((gender) => (
                         <option key={gender} value={gender}>{gender}</option>
                     ))}
                 </select>
+                <select
+                    value={newProduct.brand}
+                    onChange={(e) => setNewProduct({...newProduct, brand: e.target.value})}
+                    required
+                >
+                    {brands.map((brand) => (
+                        <option key={brand} value={brand}>{brand}</option>
+                    ))}
+                </select>
                 <input
                     type="number"
                     placeholder="Price"
                     value={newProduct.price}
-                    onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+                    onChange={(e) => setNewProduct({...newProduct, price: parseFloat(e.target.value)})}
                     required
                 />
                 <input
                     type="number"
                     placeholder="Quantity"
                     value={newProduct.quantity}
-                    onChange={(e) => setNewProduct({ ...newProduct, quantity: parseInt(e.target.value) })}
+                    onChange={(e) => setNewProduct({...newProduct, quantity: parseInt(e.target.value)})}
                     required
                 />
                 <input
                     type="text"
                     placeholder="Short Description"
                     value={newProduct.shortDescription}
-                    onChange={(e) => setNewProduct({ ...newProduct, shortDescription: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, shortDescription: e.target.value})}
                     required
                 />
                 <textarea
                     placeholder="Long Description"
                     value={newProduct.longDescription}
-                    onChange={(e) => setNewProduct({ ...newProduct, longDescription: e.target.value })}
+                    onChange={(e) => setNewProduct({...newProduct, longDescription: e.target.value})}
                 />
                 <div className="button-container">
                     <button type="submit" className="save-button">
@@ -219,6 +237,7 @@ const AdminProductsPage = () => {
                 </div>
             </form>
 
+
             <div className="product-list">
                 {filteredProducts.map((product) => (
                     <div key={product.id} className="product-card" onClick={() => handleEditProduct(product)}>
@@ -229,7 +248,9 @@ const AdminProductsPage = () => {
                         <p>Gender: {product.gender}</p>
                         <p>Price: ${product.price}</p>
                         <p>Quantity: {product.quantity}</p>
-                        <p>{product.shortDescription}</p>
+                        {/*<p>{product.shortDescription}</p>*/}
+                        <p>Brand: {product.brand}</p>
+
                         <button
                             className="delete-button"
                             onClick={(e) => {

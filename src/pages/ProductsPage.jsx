@@ -161,6 +161,7 @@ const ProductsPage = () => {
                                     onError={(e) => { e.target.src = '/productimages/default.png'; }}
                                 />
                                 <h3>{product.name}</h3>
+                                <p>Brand: {product.brand}</p>
                                 <p>Category: {product.category}</p>
                                 <p>Gender: {product.gender}</p>
                                 <p>Color: {product.color}</p>
