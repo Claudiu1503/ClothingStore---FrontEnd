@@ -104,7 +104,7 @@ const SingleProductPage = () => {
     const toggleFavorite = () => setIsFavorite((prev) => !prev);
 
     const handleAddToCart = () => {
-        if (selectedSize) {
+        if (selectedSize || product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES") {
             alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
         } else {
             alert('Please select a size');
@@ -140,20 +140,48 @@ const SingleProductPage = () => {
                 <p>Gender: {product.gender}</p>
                 <p>Color: {product.color}</p>
                 <div className="product-price-text">Price: ${product.price}</div>
-                <p>{product.description}</p>
+                <p style={{ fontWeight: 'bold' }}>Short Description:</p>
+                <p>{product.shortDescription}</p>
 
                 <div className="product-size-select">
                     <label htmlFor="size">Select Size:</label>
-                    <select id="size" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
-                        <option value="">Choose size</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                    </select>
+                    {product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES" ? (
+                        <p>For this category the size is universal !</p>
+                    ) : (
+                        <select id="size" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
+                            <option value="">Choose size</option>
+                            {product.category === "SNEAKERS" ? (
+                                <>
+                                    <option value="35">35</option>
+                                    <option value="36">36</option>
+                                    <option value="37">37</option>
+                                    <option value="38">38</option>
+                                    <option value="39">39</option>
+                                    <option value="40">40</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                    <option value="45">45</option>
+                                    <option value="46">46</option>
+                                    <option value="47">47</option>
+                                </>
+                            ) : (
+                                <>
+                                    <option value="XXS">XXS</option>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                    <option value="XXXL">XXXL</option>
+                                </>
+                            )}
+                        </select>
+                    )}
                 </div>
+
 
                 <div className="product-buttons">
                     <button onClick={handleAddToCart} className="add-to-cart-button">Add to Cart</button>

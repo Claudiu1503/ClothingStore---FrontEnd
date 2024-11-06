@@ -199,12 +199,9 @@ const ProductsPage = () => {
                                     }}
                                 />
                                 <h3>{product.name}</h3>
-                                <p>Brand: {product.brand}</p>
+                                <p style={{fontWeight: 'bold', color: 'green'}}>Price: ${product.price}</p>
+                                <p style={{fontWeight: 'bold'}}>Brand: {product.brand}</p>
                                 <p>Category: {product.category}</p>
-                                <p>Gender: {product.gender}</p>
-                                <p>Color: {product.color}</p>
-                                <p>Price: ${product.price}</p>
-                                <p>{product.shortDescription}</p>
                             </Link>
                         ))
                     ) : (
