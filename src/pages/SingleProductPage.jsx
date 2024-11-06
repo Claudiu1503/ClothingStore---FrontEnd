@@ -10,13 +10,29 @@ const SingleProductPage = () => {
     const [imageError, setImageError] = useState(false);
     const [selectedSize, setSelectedSize] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
-    const maxImageCount = 3; // Adjust based on the number of images per product
+    const [reviews, setReviews] = useState([]);
+    const [reviewContent, setReviewContent] = useState('');
+    const [reviewRating, setReviewRating] = useState(5);
+
+    const user_id = localStorage.getItem("id") || null;
+    const email = localStorage.getItem("email");
+    const password = localStorage.getItem("password");
+    const maxImageCount = 3;
+
+    const getAuthHeader = () => {
+        if (email && password) {
+            return {
+                Authorization: 'Basic ' + btoa(`${email}:${password}`)
+            };
+        }
+        return {};
+    };
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const response = await fetch(`http://localhost:8080/product/view/${id}`, {
-                    method: 'GET',
+                    headers: getAuthHeader(),
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -29,8 +45,51 @@ const SingleProductPage = () => {
             }
         };
 
+        const fetchReviews = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/reviews/product/${id}`, {
+                    headers: getAuthHeader(),
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setReviews(data);
+                } else {
+                    console.error('Failed to fetch reviews');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
         fetchProduct();
+        fetchReviews();
     }, [id]);
+
+    const handleAddReview = async () => {
+        if (user_id && reviewContent && reviewRating) {
+            try {
+                const response = await fetch(
+                    `http://localhost:8080/reviews/add?user=${user_id}&productId=${id}&content=${encodeURIComponent(reviewContent)}&rating=${reviewRating}`,
+                    {
+                        method: 'POST',
+                        headers: getAuthHeader(),
+                    }
+                );
+                if (response.ok) {
+                    const newReview = await response.json();
+                    setReviews([...reviews, newReview]);
+                    setReviewContent('');
+                    setReviewRating(5);
+                } else {
+                    console.error('Failed to add review');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        } else {
+            alert('Please add your review content and rating');
+        }
+    };
 
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex < maxImageCount ? prevIndex + 1 : 1));
@@ -80,9 +139,7 @@ const SingleProductPage = () => {
                 <p>Category: {product.category}</p>
                 <p>Gender: {product.gender}</p>
                 <p>Color: {product.color}</p>
-                <div className="product-price-text">
-                    Price: ${product.price}
-                </div>
+                <div className="product-price-text">Price: ${product.price}</div>
                 <p>{product.description}</p>
 
                 <div className="product-size-select">
@@ -116,6 +173,35 @@ const SingleProductPage = () => {
                             <div className="delivery-card-info">Fast delivery</div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="reviews-section">
+                <h2>Customer Reviews</h2>
+                {reviews.map((review) => (
+                    <div key={review.id} className="review">
+                        <p><strong>{review.user.username}:</strong> {review.content}</p>
+                        <p>Rating: {review.rating} / 5</p>
+                    </div>
+                ))}
+                <div className="add-review">
+                    <h3>Add Your Review</h3>
+                    <textarea
+                        value={reviewContent}
+                        onChange={(e) => setReviewContent(e.target.value)}
+                        placeholder="Write your review here..."
+                    />
+                    <select
+                        value={reviewRating}
+                        onChange={(e) => setReviewRating(parseInt(e.target.value))}
+                    >
+                        {[1, 2, 3, 4, 5].map((rating) => (
+                            <option key={rating} value={rating}>
+                                {rating} Star{rating > 1 ? "s" : ""}
+                            </option>
+                        ))}
+                    </select>
+                    <button onClick={handleAddReview}>Submit Review</button>
                 </div>
             </div>
         </div>

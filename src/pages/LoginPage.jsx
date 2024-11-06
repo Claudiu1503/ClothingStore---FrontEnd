@@ -37,6 +37,7 @@ const LoginPage = ({ onLogin }) => {
                 localStorage.setItem('email', email);
                 localStorage.setItem('password', password);
                 localStorage.setItem('role', data.role);
+                localStorage.setItem('id',data.id);
 
                 const userName = data.username; // Get username from the response
                 onLogin(userName);
