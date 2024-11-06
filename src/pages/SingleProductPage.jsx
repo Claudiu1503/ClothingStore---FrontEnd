@@ -127,7 +127,7 @@ const SingleProductPage = () => {
                     src={`/productimages/${product.id}-${currentImageIndex}.png`}
                     alt={product.name}
                     onError={() => setImageError(true)}
-                    style={{ display: imageError ? 'none' : 'block' }}
+                    style={{display: imageError ? 'none' : 'block'}}
                 />
                 {imageError && <p>Image not available</p>}
                 <button onClick={handleNextImage} className="carousel-button">{">"}</button>
@@ -140,7 +140,7 @@ const SingleProductPage = () => {
                 <p>Gender: {product.gender}</p>
                 <p>Color: {product.color}</p>
                 <div className="product-price-text">Price: ${product.price}</div>
-                <p style={{ fontWeight: 'bold' }}>Short Description:</p>
+                <p style={{fontWeight: 'bold'}}>Short Description:</p>
                 <p>{product.shortDescription}</p>
 
                 <div className="product-size-select">
@@ -206,32 +206,41 @@ const SingleProductPage = () => {
 
             <div className="reviews-section">
                 <h2>Customer Reviews</h2>
-                {reviews.map((review) => (
-                    <div key={review.id} className="review">
-                        <p><strong>{review.user.username}:</strong> {review.content}</p>
-                        <p>Rating: {review.rating} / 5</p>
+                {reviews.length === 0 ? (
+                    <p>For this product, there are no reviews yet.</p>
+                ) : (
+                    reviews.map((review) => (
+                        <div key={review.id} className="review">
+                            <p><strong>{review.user.username}:</strong> {review.content}</p>
+                            <p>Rating: {review.rating} / 5</p>
+                        </div>
+                    ))
+                )}
+
+                {(email && password) && (
+                    <div className="add-review">
+                        <h3>Add Your Review</h3>
+                        <textarea
+                            value={reviewContent}
+                            onChange={(e) => setReviewContent(e.target.value)}
+                            placeholder="Write your review here..."
+                        />
+                        <select
+                            value={reviewRating}
+                            onChange={(e) => setReviewRating(parseInt(e.target.value))}
+                        >
+                            {[1, 2, 3, 4, 5].map((rating) => (
+                                <option key={rating} value={rating}>
+                                    {rating} Star{rating > 1 ? "s" : ""}
+                                </option>
+                            ))}
+                        </select>
+                        <button onClick={handleAddReview}>Submit Review</button>
                     </div>
-                ))}
-                <div className="add-review">
-                    <h3>Add Your Review</h3>
-                    <textarea
-                        value={reviewContent}
-                        onChange={(e) => setReviewContent(e.target.value)}
-                        placeholder="Write your review here..."
-                    />
-                    <select
-                        value={reviewRating}
-                        onChange={(e) => setReviewRating(parseInt(e.target.value))}
-                    >
-                        {[1, 2, 3, 4, 5].map((rating) => (
-                            <option key={rating} value={rating}>
-                                {rating} Star{rating > 1 ? "s" : ""}
-                            </option>
-                        ))}
-                    </select>
-                    <button onClick={handleAddReview}>Submit Review</button>
-                </div>
+                )}
             </div>
+
+
         </div>
     );
 };
