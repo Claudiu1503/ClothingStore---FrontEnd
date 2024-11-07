@@ -1,11 +1,36 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
+
 import '../styles/singleProduct.css';
+
+
+// eslint-disable-next-line react/prop-types
+const StarRating = ({ rating, onRate }) => {
+    const stars = [1, 2, 3, 4, 5];
+
+    return (
+        <div className="star-rating">
+            {stars.map((star) => (
+                <span
+                    key={star}
+                    className={`star ${star <= rating ? 'filled' : ''}`}  // Apply 'filled' class based on rating
+                    onClick={() => onRate(star)}  // Set rating when clicked
+                    onMouseEnter={() => onRate(star)}  // Show preview rating on hover
+                    onMouseLeave={() => onRate(rating)}  // Reset to original rating on hover leave
+                >
+                    ★
+                </span>
+            ))}
+        </div>
+    );
+};
 
 const SingleProductPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
+    const { addToCart } = useCart();
     const [currentImageIndex, setCurrentImageIndex] = useState(1);
     const [imageError, setImageError] = useState(false);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -65,6 +90,16 @@ const SingleProductPage = () => {
         fetchReviews();
     }, [id]);
 
+    const handleAddToCart = () => {
+        if (selectedSize || product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES") {
+            addToCart(product, 1); // You can adjust quantity if needed
+            alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
+        } else {
+            alert('Please select a size');
+        }
+    };
+
+
     const handleAddReview = async () => {
         if (user_id && reviewContent && reviewRating) {
             try {
@@ -103,17 +138,13 @@ const SingleProductPage = () => {
 
     const toggleFavorite = () => setIsFavorite((prev) => !prev);
 
-    const handleAddToCart = () => {
-        if (selectedSize || product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES") {
-            alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
-        } else {
-            alert('Please select a size');
-        }
-    };
+
 
     if (!product) {
         return <p>Loading...</p>;
     }
+
+
 
     return (
         <div className="single-product-page">
@@ -223,22 +254,11 @@ const SingleProductPage = () => {
                             onChange={(e) => setReviewContent(e.target.value)}
                             placeholder="Write your review here..."
                         />
-                        <select
-                            value={reviewRating}
-                            onChange={(e) => setReviewRating(parseInt(e.target.value))}
-                        >
-                            {[1, 2, 3, 4, 5].map((rating) => (
-                                <option key={rating} value={rating}>
-                                    {rating} Star{rating > 1 ? "s" : ""}
-                                </option>
-                            ))}
-                        </select>
+                        <StarRating rating={reviewRating} onRate={setReviewRating} />
                         <button onClick={handleAddReview}>Submit Review</button>
                     </div>
                 )}
             </div>
-
-
         </div>
     );
 };

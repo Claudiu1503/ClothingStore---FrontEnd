@@ -1,0 +1,52 @@
+/* user-orders.css */
+
+.user-orders-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust the gap between order cards as needed */
+}
+
+.order-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1 1 300px; /* Ensure minimum width and allow flexibility */
+}
+
+.order-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.order-subheader {
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+.order-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    flex: 1 1 200px; /* Adjust width as needed */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures image fills container while maintaining aspect ratio */
+}
+
+.product-details {
+    margin-left: 10px;
+}
