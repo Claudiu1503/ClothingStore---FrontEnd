@@ -4,12 +4,15 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ProductsPage from './pages/ProductsPage';
 import RegisterPage from './pages/RegisterPage';
-import ResetPasswordPage from './pages/ResetpasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import ProfilePage from './pages/ProfilePage';
-import { useState } from 'react';
 import AdminProductsPage from './admin/AdminProductsPage';
 import SingleProductPage from './pages/SingleProductPage';
 import NewPasswordPage from './pages/NewPasswordPage';
+import CheckoutPage from './pages/CheckoutPage';
+import Cart from './components/Cart';
+import { CartProvider } from './contexts/CartContext';
+import { useState } from 'react';
 
 const App = () => {
     const location = useLocation();
@@ -26,30 +29,33 @@ const App = () => {
         setUserName('');
     };
 
-    const showAppBar = location.pathname === '/' || location.pathname === '/products' ||  location.pathname.startsWith('/product/');
+    const showAppBar = location.pathname === '/' || location.pathname === '/products' || location.pathname.startsWith('/product/');
 
     return (
-        <div>
-            {showAppBar && (
-                <AppBar
-                    isAuthenticated={isAuthenticated}
-                    userName={userName}
-                    onSignOut={handleSignOut}
-                />
-            )}
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-                <Route path="/products" element={<ProductsPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/reset-password" element={<ResetPasswordPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/admin/products" element={<AdminProductsPage />} />
-                <Route path="/product/:id" element={<SingleProductPage />} />
-                <Route path="/new-password" element={<NewPasswordPage />} />
-
-            </Routes>
-        </div>
+        <CartProvider>
+            <div>
+                {showAppBar && (
+                    <AppBar
+                        isAuthenticated={isAuthenticated}
+                        userName={userName}
+                        onSignOut={handleSignOut}
+                    />
+                )}
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+                    <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/reset-password" element={<ResetPasswordPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/admin/products" element={<AdminProductsPage />} />
+                    <Route path="/product/:id" element={<SingleProductPage />} />
+                    <Route path="/new-password" element={<NewPasswordPage />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
+                </Routes>
+            </div>
+        </CartProvider>
     );
 };
 
