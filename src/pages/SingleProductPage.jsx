@@ -118,7 +118,7 @@ const SingleProductPage = () => {
     return (
         <div className="single-product-page">
             <button className="back-to-products-button" onClick={() => navigate('/products')}>
-                Back to Products
+                ← Back to Products
             </button>
 
             <div className="product-image-carousel">

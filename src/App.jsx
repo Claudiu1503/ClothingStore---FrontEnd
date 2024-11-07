@@ -26,7 +26,7 @@ const App = () => {
         setUserName('');
     };
 
-    const showAppBar = location.pathname === '/' || location.pathname === '/products';
+    const showAppBar = location.pathname === '/' || location.pathname === '/products' ||  location.pathname.startsWith('/product/');
 
     return (
         <div>
