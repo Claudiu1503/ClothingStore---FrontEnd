@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
+
 import '../styles/singleProduct.css';
 
 const SingleProductPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
+    const { addToCart } = useCart();
     const [currentImageIndex, setCurrentImageIndex] = useState(1);
     const [imageError, setImageError] = useState(false);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -65,6 +68,16 @@ const SingleProductPage = () => {
         fetchReviews();
     }, [id]);
 
+    const handleAddToCart = () => {
+        if (selectedSize || product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES") {
+            addToCart(product, 1); // You can adjust quantity if needed
+            alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
+        } else {
+            alert('Please select a size');
+        }
+    };
+
+
     const handleAddReview = async () => {
         if (user_id && reviewContent && reviewRating) {
             try {
@@ -103,13 +116,7 @@ const SingleProductPage = () => {
 
     const toggleFavorite = () => setIsFavorite((prev) => !prev);
 
-    const handleAddToCart = () => {
-        if (selectedSize || product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES") {
-            alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
-        } else {
-            alert('Please select a size');
-        }
-    };
+
 
     if (!product) {
         return <p>Loading...</p>;
