@@ -145,7 +145,7 @@ const SingleProductPage = () => {
 
                 <div className="product-size-select">
                     <label htmlFor="size">Select Size:</label>
-                    {product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES" ? (
+                    {product.category === "BAGS" || product.category === "ACCESSORIES" ? (
                         <p>For this category the size is universal !</p>
                     ) : (
                         <select id="size" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
