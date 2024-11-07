@@ -13,6 +13,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import Cart from './components/Cart';
 import { CartProvider } from './contexts/CartContext';
 import { useState } from 'react';
+import UserOrders from './pages/UserOrders';
 
 const App = () => {
     const location = useLocation();
@@ -53,6 +54,7 @@ const App = () => {
                     <Route path="/new-password" element={<NewPasswordPage />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/userorders" element={<UserOrders />} />
                 </Routes>
             </div>
         </CartProvider>

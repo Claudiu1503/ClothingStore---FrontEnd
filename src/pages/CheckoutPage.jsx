@@ -47,14 +47,6 @@ const CheckoutPage = () => {
     const handleSubmitOrder = async () => {
         const orderData = {
             userId: localStorage.getItem("id"),
-            address: {
-                country: 'Romania',
-                state: 'Cluj',
-                city: 'Cluj-Napoca',
-                zip: '400000',
-                addressLine: 'Strada Exemplu 123',
-                phone: '0722345678'
-            },
             items: cartItems.map(item => ({
                 productId: item.id, // Use item.id instead of item.productId
                 quantity: item.quantity

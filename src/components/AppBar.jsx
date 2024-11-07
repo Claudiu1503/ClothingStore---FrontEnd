@@ -63,8 +63,13 @@ const AppBar = () => {
                     {showOptions && (
                         <div className="user-options" onMouseEnter={() => setShowOptions(true)}
                              onMouseLeave={() => setShowOptions(false)}>
+                            <button onClick={() => navigate('/userorders')}>View Orders</button>
                             <button onClick={() => navigate('/profile')}>View Profile</button>
-                            <button onClick={() => { logout(); navigate('/'); }}>Sign Out</button>
+                            <button onClick={() => {
+                                logout();
+                                navigate('/');
+                            }}>Sign Out
+                            </button>
                         </div>
                     )}
                 </div>
