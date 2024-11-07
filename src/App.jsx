@@ -11,7 +11,6 @@ import SingleProductPage from './pages/SingleProductPage';
 import NewPasswordPage from './pages/NewPasswordPage';
 import CheckoutPage from './pages/CheckoutPage';
 import Cart from './components/Cart';
-import OrderSubmit from './components/OrderSubmit';
 import { CartProvider } from './contexts/CartContext';
 import { useState } from 'react';
 
@@ -53,7 +52,6 @@ const App = () => {
                     <Route path="/product/:id" element={<SingleProductPage />} />
                     <Route path="/new-password" element={<NewPasswordPage />} />
                     <Route path="/cart" element={<Cart />} />
-                    <Route path="/submit-order" element={<OrderSubmit />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
                 </Routes>
             </div>

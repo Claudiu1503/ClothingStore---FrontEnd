@@ -8,9 +8,12 @@ const OrderSubmit = () => {
         const orderData = {
             userId: localStorage.getItem("id"),
             address: {
-                street: '123 Main St',
-                city: 'Anytown',
-                zipCode: '12345'
+                country: 'Romania',
+                state: 'Cluj',
+                city: 'Cluj-Napoca',
+                zip: '400000',
+                addressLine: 'Strada Exemplu 123',
+                phone: '0722345678'
             },
             items: cartItems.map(item => ({
                 productId: item.productId,
@@ -18,9 +21,11 @@ const OrderSubmit = () => {
             }))
         };
 
+
         try {
             const response = await axios.post('http://localhost:8080/order/create', orderData);
-            alert('Order placed successfully!');
+            // alert('Order placed successfully!');
+            console.log(response);
             clearCart();
         } catch (error) {
             console.error('Error creating order:', error);

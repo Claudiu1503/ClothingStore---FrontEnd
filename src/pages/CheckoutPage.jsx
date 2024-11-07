@@ -1,12 +1,24 @@
 import { useCart } from '../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import '../styles/checkout.css';
 
 const CheckoutPage = () => {
     const { cartItems, updateQuantity, removeFromCart } = useCart();
     const navigate = useNavigate();
     const [productDetails, setProductDetails] = useState([]);
+    const email = localStorage.getItem("email");
+    const password = localStorage.getItem("password");
+
+    const getAuthHeader = () => {
+        if (email && password) {
+            return {
+                Authorization: 'Basic ' + btoa(`${email}:${password}`)
+            };
+        }
+        return {};
+    };
 
     useEffect(() => {
         // Fetch product details to validate stock and display the first image
@@ -32,15 +44,49 @@ const CheckoutPage = () => {
         }
     }, [cartItems]);
 
-    const handleOrderSubmit = () => {
-        alert('Order placed successfully!');
-        localStorage.removeItem('cart');
-        navigate('/products');
+    const handleSubmitOrder = async () => {
+        const orderData = {
+            userId: localStorage.getItem("id"),
+            address: {
+                country: 'Romania',
+                state: 'Cluj',
+                city: 'Cluj-Napoca',
+                zip: '400000',
+                addressLine: 'Strada Exemplu 123',
+                phone: '0722345678'
+            },
+            items: cartItems.map(item => ({
+                productId: item.id, // Use item.id instead of item.productId
+                quantity: item.quantity
+            }))
+        };
+
+        try {
+            const response = await axios.post(
+                'http://localhost:8080/order/create',
+                orderData,
+                { headers: getAuthHeader() }
+            );
+            console.log(response);
+            alert('Order placed successfully!');
+            localStorage.removeItem("cart");
+            navigate('/products');
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error creating order:', error);
+            if (error.response) {
+                console.error('Server responded with:', error.response.data);
+                alert(`Error placing order: ${error.response.data}`);
+            } else {
+                alert('Unknown error occurred while placing order.');
+            }
+        }
     };
 
+
     const handleQuantityChange = (item, newQuantity) => {
-        // Ensure newQuantity is within valid range (0 to item.stock)
-        const validQuantity = Math.min(Math.max(newQuantity, 0), item.stock || Infinity); // Handle potential undefined stock
+        const validQuantity = Math.min(Math.max(newQuantity, 0), item.stock || Infinity);
         updateQuantity(item.id, validQuantity);
     };
 
@@ -53,7 +99,7 @@ const CheckoutPage = () => {
                         <li key={item.id} className="cart-item">
                             <div className="cart-item-image">
                                 <img
-                                    src={`/productimages/${item.id}-1.png`} // First image for the product
+                                    src={`/productimages/${item.id}-1.png`}
                                     alt={item.name}
                                     className="product-image"
                                 />
@@ -74,7 +120,7 @@ const CheckoutPage = () => {
                                         value={item.quantity}
                                         onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
                                         min="0"
-                                        max={productDetails[index]?.stock || item.quantity} // Update max based on stock
+                                        max={productDetails[index]?.stock || item.quantity}
                                     />
                                     <button
                                         onClick={() => handleQuantityChange(item, item.quantity + 1)}
@@ -92,7 +138,7 @@ const CheckoutPage = () => {
                 <p>Your cart is empty.</p>
             )}
             {cartItems.length > 0 && (
-                <button onClick={handleOrderSubmit} className="place-order-button">
+                <button onClick={handleSubmitOrder} className="place-order-button">
                     Place Order
                 </button>
             )}
