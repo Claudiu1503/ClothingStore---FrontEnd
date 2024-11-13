@@ -1,52 +1,122 @@
-/* user-orders.css */
-
+/* User Orders Container */
 .user-orders-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Adjust the gap between order cards as needed */
+    flex-direction: column;
+    gap: 20px;
 }
 
+/* Loading Text */
+.loading {
+    font-size: 18px;
+    color: #555;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Order Card Styles */
 .order-card {
     background-color: #fff;
-    border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    flex: 1 1 300px; /* Ensure minimum width and allow flexibility */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-left: 5px solid #3498db;
 }
 
+/* Order Header */
 .order-header {
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
     margin-bottom: 10px;
 }
 
-.order-subheader {
-    font-size: 1em;
-    margin-bottom: 15px;
+/* Total Price */
+.total-price {
+    font-size: 18px;
+    font-weight: 500;
+    color: #e74c3c;
 }
 
+/* Order Subheader */
+.order-subheader {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Order Items Container */
 .order-items {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
 }
 
+/* Single Order Item */
 .order-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    flex: 1 1 200px; /* Adjust width as needed */
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    width: 230px;
     padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.order-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Image */
 .product-image img {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover; /* Ensures image fills container while maintaining aspect ratio */
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
+/* Product Details */
 .product-details {
-    margin-left: 10px;
+    text-align: center;
+}
+
+/* Product Name */
+.product-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Quantity */
+.quantity {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .user-orders-container {
+        padding: 15px;
+    }
+
+    .order-items {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .order-item {
+        width: 100%;
+        max-width: 300px;
+    }
 }
