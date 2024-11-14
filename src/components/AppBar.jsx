@@ -14,8 +14,18 @@ const AppBar = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [showSideBar, setShowSideBar] = useState(false);
     const [showCartDropdown, setShowCartDropdown] = useState(false);
-
+    const [authMessage, setAuthMessage] = useState(''); // State for auth message
+    const user_id = localStorage.getItem("id") || null;
     const profileImage = localStorage.getItem('profileImage');
+
+    const handleCheckout = () => {
+        if (user_id) {
+            navigate('/checkout');
+            setShowCartDropdown(false);
+        } else {
+            setAuthMessage('You must be authenticated before placing an order!');
+        }
+    };
 
     return (
         <header className="app-bar">
@@ -42,7 +52,8 @@ const AppBar = () => {
                         ) : (
                             <p>Cart is empty</p>
                         )}
-                        <button className="checkout-button" onClick={() => { navigate('/checkout'); setShowCartDropdown(false); }}>
+                        {authMessage && <p className="auth-message">{authMessage}</p>}
+                        <button className="checkout-button" onClick={handleCheckout}>
                             Go to Checkout
                         </button>
                     </div>

@@ -91,12 +91,16 @@ const SingleProductPage = () => {
     }, [id]);
 
     const handleAddToCart = () => {
-        if (selectedSize || product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES") {
-            addToCart(product, 1); // You can adjust quantity if needed
-            alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
-        } else {
-            alert('Please select a size');
+        if(user_id !=null) {
+            if (selectedSize || product.category === "BAGS" || product.category === "HATS" || product.category === "ACCESSORIES") {
+                addToCart(product, 1); // You can adjust quantity if needed
+                alert(`Added ${product.name} (Size: ${selectedSize}) to cart`);
+            } else {
+                alert('Please select a size');
+            }
         }
+        else
+            alert('You must be Authenticate before place an order!');
     };
 
 
