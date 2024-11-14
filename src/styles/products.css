@@ -3,85 +3,73 @@
     padding: 20px;
 }
 
+/* Filter menu styling */
 .filter-menu {
-    width: 200px;
-    padding: 15px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    margin-right: 20px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    font-size: 0.85rem;
+    width: 250px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
 }
 
-.filter-menu h3, .filter-menu h4 {
-    font-size: 1rem;
+/* Filter headers for each section */
+.filter-menu h3 {
+    font-size: 1.4em;
     color: #333;
-    margin-bottom: 8px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
+.filter-menu h4 {
+    font-size: 1.2em;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #eaeaea;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.filter-menu h4:hover {
+    background-color: #dcdcdc;
+}
+
+/* Filter group container */
 .filter-group {
-    margin-bottom: 12px;
+    padding-left: 15px;
+    margin-bottom: 10px;
 }
 
-.compact-checkbox, .color-checkbox {
-    display: block;
+/* Styling for checkbox labels */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    color: #333;
     margin: 5px 0;
 }
 
-.compact-checkbox label, .color-checkbox label {
-    display: flex;
-    align-items: center;
+/* Checkbox input */
+.checkbox-label input[type="checkbox"] {
+    margin-right: 10px;
 }
 
-.compact-checkbox input[type="checkbox"],
-.color-checkbox input[type="checkbox"] {
-    margin-right: 6px;
-    transform: scale(1);
-}
-
+/* Color boxes inside filter */
 .color-box {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-    margin-right: 6px;
-    border: 1px solid #ddd;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
-.price-inputs {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
-}
-
-.price-inputs input {
-    width: 45%;
-    padding: 6px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    text-align: center;
-    font-size: 0.85rem;
-    transition: border-color 0.2s ease;
-}
-
-.price-inputs input:focus {
-    border-color: #007bff;
-}
-
-.search-bar input {
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    transition: border-color 0.2s ease;
-    font-size: 0.9rem;
-}
-
-.search-bar input:focus {
-    border-color: #ffdf40;
-}
-
+/* Specific colors for color boxes */
 .color-box.white { background-color: #ffffff; }
 .color-box.black { background-color: #000000; }
 .color-box.blue { background-color: #0000ff; }
@@ -91,24 +79,35 @@
 .color-box.purple { background-color: #800080; }
 .color-box.pink { background-color: #ff69b4; }
 .color-box.orange { background-color: #ffa500; }
-.color-box.brown { background-color: #a52a2a; }
+.color-box.brown { background-color: #8b4513; }
 .color-box.grey { background-color: #808080; }
 
-
+/* Price input container */
 .price-inputs {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-top: 5px;
+    gap: 8px;
 }
 
-.price-inputs input {
-    width: 45%;
-    padding: 4px;
-    border: 1px solid #ddd;
+.price-inputs input[type="text"] {
+    width: 70px;
+    padding: 5px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    text-align: center;
-    font-size: 0.85rem;
+}
+
+/* Search bar styling */
+.search-bar {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
 }
 
 .products-content {

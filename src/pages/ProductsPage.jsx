@@ -11,8 +11,14 @@ const ProductsPage = () => {
     const [selectedGender, setSelectedGender] = useState([]);
     const [priceRange, setPriceRange] = useState([0, 15000]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [showBackToTop, setShowBackToTop] = useState(false); // State for the Back to Top button
-    const itemsPerPage = 24;
+    const [showBackToTop, setShowBackToTop] = useState(false);
+    const [filterOpen, setFilterOpen] = useState({
+        category: true,
+        color: true,
+        gender: true,
+        price: true,
+    });
+    const itemsPerPage = 12;
 
     useEffect(() => {
         fetchProducts();
@@ -23,7 +29,6 @@ const ProductsPage = () => {
         setCurrentPage(1);
     }, [searchTerm, selectedCategories, selectedColors, selectedGender, priceRange, products]);
 
-    // New effect for handling scroll events
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 300) {
@@ -69,12 +74,20 @@ const ProductsPage = () => {
     };
 
     const handlePriceInputChange = (index, value) => {
-        const newValue = parseInt(value) || 0;
-        setPriceRange((prevRange) => {
-            const updatedRange = [...prevRange];
-            updatedRange[index] = newValue;
-            return updatedRange;
-        });
+        const newValue = parseInt(value, 10);
+        if (!isNaN(newValue) && newValue >= 0) {
+            setPriceRange((prevRange) => {
+                const updatedRange = [...prevRange];
+                updatedRange[index] = newValue;
+                return updatedRange;
+            });
+        } else {
+            setPriceRange((prevRange) => {
+                const updatedRange = [...prevRange];
+                updatedRange[index] = '';
+                return updatedRange;
+            });
+        }
     };
 
     const filterProducts = () => {
@@ -117,64 +130,90 @@ const ProductsPage = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const toggleFilterOpen = (filterType) => {
+        setFilterOpen((prev) => ({ ...prev, [filterType]: !prev[filterType] }));
+    };
+
     return (
         <div className="products-page">
             <aside className="filter-menu">
                 <h3>Filter by</h3>
 
-                <h4>Category</h4>
-                {["TSHIRTS", "JEANS", "SHORTS", "PANTS", "BAGS", "TOPS", "BLOUSES", "HATS", "JACKETS", "DRESS", "SNEAKERS", "ACCESSORIES"].map((category) => (
-                    <label key={category} className="compact-checkbox">
-                        {category.charAt(0) + category.slice(1).toLowerCase()}
-                        <input
-                            type="checkbox"
-                            value={category}
-                            onChange={(e) => handleCheckboxChange(e, setSelectedCategories, selectedCategories)}
-                        />
-                    </label>
-                ))}
+                <h4 onClick={() => toggleFilterOpen('category')}>
+                    Category <span>{filterOpen.category ? '-' : '+'}</span>
+                </h4>
+                {filterOpen.category && (
+                    <div className="filter-group">
+                        {["TSHIRTS", "JEANS", "SHORTS", "PANTS", "BAGS", "TOPS", "BLOUSES", "HATS", "JACKETS", "DRESS", "SNEAKERS", "ACCESSORIES"].map((category) => (
+                            <label key={category} className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    value={category}
+                                    onChange={(e) => handleCheckboxChange(e, setSelectedCategories, selectedCategories)}
+                                />
+                                {category.charAt(0) + category.slice(1).toLowerCase()}
+                            </label>
+                        ))}
+                    </div>
+                )}
 
-                <h4>Color</h4>
-                {["WHITE", "BLACK", "BLUE", "RED", "GREEN", "YELLOW", "PURPLE", "PINK", "ORANGE", "BROWN", "GREY"].map((color) => (
-                    <label key={color} className="compact-checkbox color-checkbox">
-                        <span className={`color-box ${color.toLowerCase()}`}></span>
-                        {color.charAt(0) + color.slice(1).toLowerCase()}
-                        <input
-                            type="checkbox"
-                            value={color}
-                            onChange={(e) => handleCheckboxChange(e, setSelectedColors, selectedColors)}
-                        />
-                    </label>
-                ))}
+                <h4 onClick={() => toggleFilterOpen('color')}>
+                    Color <span>{filterOpen.color ? '-' : '+'}</span>
+                </h4>
+                {filterOpen.color && (
+                    <div className="filter-group">
+                        {["WHITE", "BLACK", "BLUE", "RED", "GREEN", "YELLOW", "PURPLE", "PINK", "ORANGE", "BROWN", "GREY"].map((color) => (
+                            <label key={color} className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    value={color}
+                                    onChange={(e) => handleCheckboxChange(e, setSelectedColors, selectedColors)}
+                                />
+                                <span className={`color-box ${color.toLowerCase()}`}></span>
+                                {color.charAt(0) + color.slice(1).toLowerCase()}
+                            </label>
+                        ))}
+                    </div>
+                )}
 
-                <h4>Gender</h4>
-                {["MALE", "FEMALE", "UNISEX"].map((gender) => (
-                    <label key={gender} className="compact-checkbox">
-                        {gender.charAt(0) + gender.slice(1).toLowerCase()}
-                        <input
-                            type="checkbox"
-                            value={gender}
-                            onChange={(e) => handleCheckboxChange(e, setSelectedGender, selectedGender)}
-                        />
-                    </label>
-                ))}
+                <h4 onClick={() => toggleFilterOpen('gender')}>
+                    Gender <span>{filterOpen.gender ? '-' : '+'}</span>
+                </h4>
+                {filterOpen.gender && (
+                    <div className="filter-group">
+                        {["MALE", "FEMALE", "UNISEX"].map((gender) => (
+                            <label key={gender} className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    value={gender}
+                                    onChange={(e) => handleCheckboxChange(e, setSelectedGender, selectedGender)}
+                                />
+                                {gender.charAt(0) + gender.slice(1).toLowerCase()}
+                            </label>
+                        ))}
+                    </div>
+                )}
 
-                <h4>Price</h4>
-                <div className="price-inputs">
-                    <input
-                        type="text"
-                        value={priceRange[0]}
-                        onChange={(e) => handlePriceInputChange(0, e.target.value)}
-                        placeholder="Min"
-                    />
-                    <span> - </span>
-                    <input
-                        type="text"
-                        value={priceRange[1]}
-                        onChange={(e) => handlePriceInputChange(1, e.target.value)}
-                        placeholder="Max"
-                    />
-                </div>
+                <h4 onClick={() => toggleFilterOpen('price')}>
+                    Price <span>{filterOpen.price ? '-' : '+'}</span>
+                </h4>
+                {filterOpen.price && (
+                    <div className="price-inputs">
+                        <input
+                            type="text"
+                            value={priceRange[0]}
+                            onChange={(e) => handlePriceInputChange(0, e.target.value)}
+                            placeholder="Min"
+                        />
+                        <span> - </span>
+                        <input
+                            type="text"
+                            value={priceRange[1]}
+                            onChange={(e) => handlePriceInputChange(1, e.target.value)}
+                            placeholder="Max"
+                        />
+                    </div>
+                )}
             </aside>
 
             <main className="products-content">
@@ -208,7 +247,7 @@ const ProductsPage = () => {
                         <p>No products found.</p>
                     )}
                 </div>
-                {/* Pagination Controls */}
+
                 <div className="pagination">
                     {[...Array(totalPages).keys()].map((pageNumber) => (
                         <button
@@ -220,10 +259,10 @@ const ProductsPage = () => {
                         </button>
                     ))}
                 </div>
-                {/*Back to top button*/}
+
                 {showBackToTop && (
                     <button className="back-to-top" onClick={scrollToTop}>
-                        ↑ Top
+                        Back to Top
                     </button>
                 )}
             </main>
@@ -232,6 +271,3 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
-
-
-
