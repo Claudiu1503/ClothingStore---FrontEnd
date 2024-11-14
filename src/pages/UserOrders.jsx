@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import '../styles/userorders.css'; // Import the CSS file
 
 const UserOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -45,27 +46,39 @@ const UserOrders = () => {
         <div className="user-orders-container">
             {orders.map((order) => (
                 <div key={order.id} className="order-card">
-                    <h3 className="order-header">Order #{order.id} - <span className="total-price">{order.total} USD</span></h3>
+                    <h3 className="order-header">
+                        ORDER{order.id}
+                        <span className="total-price">Total: {order.total} $</span>
+                    </h3>
                     <h4 className="order-subheader">Products:</h4>
-                    <div className="order-items">
+                    <table className="order-table">
+                        <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {order.orderItems.map((item) => (
-                            <div key={item.id} className="order-item">
-                                <div className="product-image">
+                            <tr key={item.id} className="order-item">
+                                <td className="product-image">
                                     <img
                                         src={`/productimages/${item.product.id}-1.png`}
                                         alt={item.product.name}
                                         onError={(e) => (e.target.src = '/fallback-image.png')}
-                                        // Added styles for responsive image
-                                        style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'cover' }}
                                     />
-                                </div>
-                                <div className="product-details">
-                                    <p className="product-name">{item.product.name}</p>
-                                    <p className="quantity">Quantity: {item.quantity}</p>
-                                </div>
-                            </div>
+                                </td>
+                                <td className="product-name">
+                                    {item.product.name}
+                                </td>
+                                <td className="quantity">
+                                    {item.quantity}
+                                </td>
+                            </tr>
                         ))}
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             ))}
         </div>
