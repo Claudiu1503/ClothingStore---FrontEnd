@@ -16,6 +16,7 @@ const AppBar = () => {
     const [showCartDropdown, setShowCartDropdown] = useState(false);
     const [authMessage, setAuthMessage] = useState(''); // State for auth message
     const user_id = localStorage.getItem("id") || null;
+    const user_role = localStorage.getItem("role");
     const profileImage = localStorage.getItem('profileImage');
 
     const handleCheckout = () => {
@@ -74,6 +75,10 @@ const AppBar = () => {
                     {showOptions && (
                         <div className="user-options" onMouseEnter={() => setShowOptions(true)}
                              onMouseLeave={() => setShowOptions(false)}>
+                            {/* Show only if user_role is "ADMIN" */}
+                            {user_role === "ADMIN" && (
+                                <button onClick={() => navigate('/admin/products')}>ADMIN Dashboard</button>
+                            )}
                             <button onClick={() => navigate('/userorders')}>View Orders</button>
                             <button onClick={() => navigate('/profile')}>View Profile</button>
                             <button onClick={() => {
