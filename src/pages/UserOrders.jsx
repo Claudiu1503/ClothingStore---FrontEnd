@@ -47,8 +47,8 @@ const UserOrders = () => {
             {orders.map((order) => (
                 <div key={order.id} className="order-card">
                     <h3 className="order-header">
-                        ORDER{order.id}
-                        <span className="total-price">Total: {order.total} $</span>
+                        ORDER {order.id}
+                        <span className="total-price">  Total: {order.total} $</span>
                     </h3>
                     <h4 className="order-subheader">Products:</h4>
                     <table className="order-table">
