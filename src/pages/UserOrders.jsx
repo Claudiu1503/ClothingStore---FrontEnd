@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import '../styles/userorders.css'; // Import the CSS file
+import '../styles/userorders.css';
 
 const UserOrders = () => {
     const [orders, setOrders] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const ordersPerPage = 5; // Numărul de comenzi pe pagină
     const user_id = localStorage.getItem("id") || null;
     const email = localStorage.getItem("email");
     const password = localStorage.getItem("password");
 
-    // Helper function to create authentication header
     const getAuthHeader = () => {
         if (email && password) {
             return {
@@ -17,7 +18,6 @@ const UserOrders = () => {
         return {};
     };
 
-    // Fetch orders on component mount
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -38,20 +38,37 @@ const UserOrders = () => {
         fetchOrders();
     }, [user_id]);
 
+    // Paginate orders
+    const startIndex = (currentPage - 1) * ordersPerPage;
+    const paginatedOrders = orders.slice(startIndex, startIndex + ordersPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage * ordersPerPage < orders.length) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
     if (!orders.length) {
         return <p className="loading">Loading orders...</p>;
     }
 
     return (
         <div className="user-orders-container">
-            {orders.map((order) => (
+            {paginatedOrders.map((order) => (
                 <div key={order.id} className="order-card">
                     <h3 className="order-header">
-                        ORDER{order.id}
-                        <span className="total-price">Total: {order.total} $</span>
+                        Order id: {order.id}
+                        <span className="total-price">  Total: {order.total} $</span>
                     </h3>
+                    <h5 className="order-status" style={{color: "green"}}>Status: Processed ✓</h5>
                     <h4 className="order-subheader">Products:</h4>
-                    <table className="order-table">
+                    <table className="order-table compact-table">
                         <thead>
                         <tr>
                             <th>Image</th>
@@ -81,6 +98,15 @@ const UserOrders = () => {
                     </table>
                 </div>
             ))}
+            <div className="pagination">
+                <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <span>Page {currentPage}</span>
+                <button onClick={handleNextPage} disabled={currentPage * ordersPerPage >= orders.length}>
+                    Next
+                </button>
+            </div>
         </div>
     );
 };
