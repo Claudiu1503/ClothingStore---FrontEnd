@@ -96,7 +96,9 @@ const AppBar = () => {
                                 {user.username}
                             </span>
                             {showOptions && (
-                                <div className="user-options">
+                                <div onMouseEnter={() => setShowOptions(true)}
+                                     onMouseLeave={() => setShowOptions(false)}
+                                     className="user-options">
                                     {user_role === "ADMIN" && (
                                         <button onClick={() => navigate('/admin/products')}>
                                             ADMIN Dashboard
