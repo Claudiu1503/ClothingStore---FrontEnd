@@ -2,13 +2,127 @@
 
 .app-bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 5px 15px;
     background-color: #333;
     color: #fff;
     position: relative;
 }
+
+.category-selector {
+    display: flex;
+    gap: 15px;
+    font-weight: bold;
+    color: #fff;
+    margin-right: auto;
+}
+
+.category-selector span {
+    cursor: pointer;
+    border: none;
+    color: #ccc;
+    transition: color 0.3s;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+.category-selector span.selected {
+    color: #1ffff8;
+}
+
+.category-selector span.selected::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #000000;
+    bottom: 0;
+    left: 50%;
+    animation: expandLine 0.3s ease-out forwards;
+}
+
+/* Definirea animației de expansiune a liniei */
+@keyframes expandLine {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    100% {
+        width: 100%;
+        left: 0;
+    }
+}
+
+
+.app-name {
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 450px;
+}
+
+.action-container {
+    display: flex;
+    align-items: center;
+}
+
+.cart-container {
+    margin-right: 10px;
+}
+
+.categories-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 5px 20px;
+}
+
+.categories-list {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.categories-list li {
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.categories-list li:hover {
+    color: #ff4081;
+}
+
+.search-bar-container {
+    display: flex;
+    padding-left: 600px;
+    border: none;
+}
+
+.search-bar {
+    padding: 5px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 80px;
+    transition: box-shadow 0.3s;
+}
+
+.search-bar:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 64, 129, 0.5);
+}
+
+
+
+
+
+
 
 .button-sidebar {
     background: none;
@@ -190,3 +304,4 @@
 .checkout-button:hover {
     background-color: #ff1a5c;
 }
+
