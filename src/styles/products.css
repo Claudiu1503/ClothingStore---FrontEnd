@@ -5,38 +5,41 @@
 
 /* Filter menu styling */
 .filter-menu {
-    width: 250px;
+    width: 200px;
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    font-family: "Roboto Light", sans-serif;
 }
 
 /* Filter headers for each section */
 .filter-menu h3 {
     font-size: 1.4em;
-    color: #333;
+    text-align: left;
+    color: #454545;
     margin-bottom: 10px;
     font-weight: bold;
 }
 
 .filter-menu h4 {
-    font-size: 1.2em;
-    color: #666;
+    font-size: 2.5em;
+    color: rgba(0, 0, 0, 0.45);
     cursor: pointer;
     display: flex;
+    text-align: left;
     justify-content: space-between;
     margin: 15px 0;
     font-weight: bold;
-    padding: 8px;
+    padding: 12px;
     background-color: #eaeaea;
     border-radius: 4px;
-    transition: background-color 0.3s;
+    transition: background-color 0.6s, color 0.6s;
 }
 
 .filter-menu h4:hover {
-    background-color: #dcdcdc;
+    background-color: #ff768f;
+    color: WHITE;
 }
 
 /* Filter group container */
@@ -45,55 +48,127 @@
     margin-bottom: 10px;
 }
 
-/* Styling for checkbox labels */
-.checkbox-label {
+/* General Filter Button Styles */
+.filter-button {
     display: flex;
+    width: 120px;
     align-items: center;
-    font-size: 1em;
-    color: #333;
+    justify-content: center;
+    padding: 10px 15px;
     margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #eaeaea;
+    font-family: "Roboto Light", sans-serif;
+    font-size: 0.9rem;
+    color: #656565;
+
+    transition: background-color 0.6s, color 0.6s, border-color 0.6s, transform 0.3s;
 }
 
-/* Checkbox input */
-.checkbox-label input[type="checkbox"] {
+/* Active State */
+.filter-button.active {
+    color: #ff768f;
+    border-color: #ff768f;
+    transform: scale(1.1); /* Slightly enlarges the button and its content */
+}
+
+/* Specific Styling for Color Buttons */
+.color-button {
+    justify-content: flex-start;
+}
+
+.color-button .color-box {
     margin-right: 10px;
 }
 
 /* Color boxes inside filter */
 .color-box {
     display: inline-block;
-    width: 15px;
-    height: 15px;
-    border: 1px solid #ccc;
-    border-radius: 50%;
+    width: 5px;
+    height: 1px;
+    border: 1px transparent;
+    border-radius: 18%;
     margin-right: 10px;
 }
 
 /* Specific colors for color boxes */
 .color-box.white { background-color: #ffffff; }
-.color-box.black { background-color: #000000; }
-.color-box.blue { background-color: #0000ff; }
-.color-box.red { background-color: #ff0000; }
-.color-box.green { background-color: #00ff00; }
-.color-box.yellow { background-color: #ffff00; }
-.color-box.purple { background-color: #800080; }
-.color-box.pink { background-color: #ff69b4; }
-.color-box.orange { background-color: #ffa500; }
-.color-box.brown { background-color: #8b4513; }
-.color-box.grey { background-color: #808080; }
+.color-box.black { background-color: #202020; }
+.color-box.blue { background-color: #0088dd; }
+.color-box.red { background-color: #d10000; }
+.color-box.green { background-color: #0fdc00; }
+.color-box.yellow { background-color: #ffd300; }
+.color-box.purple { background-color: #cf00cf; }
+.color-box.pink { background-color: #ff54aa; }
+.color-box.orange { background-color: #ff7f00; }
+.color-box.brown { background-color: #814831; }
+.color-box.gray { background-color: #b6b6b6; }
 
-/* Price input container */
-.price-inputs {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.price-cards {
+    display: contents;
+    gap: 20px;
+    justify-content: flex-start;
+    margin-top: 10px;
 }
 
-.price-inputs input[type="text"] {
-    width: 70px;
+.price-card {
+    display: flex;
+    align-items: center;
+    background-color: rgba(207, 207, 207, 0.32);
+    border-radius: 8px;
     padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+}
+
+/* Price label (Min or Max) */
+.price-label {
+    color: #676767;
+    font-family: "Roboto Light", sans-serif;
+    font-size: 1.2em;
+    margin-bottom: 10px;  /* ensures some space between label and input */
+}
+
+.price-btn {
+    background-color: #c3c3c3;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.6s;
+}
+
+.price-btn:hover {
+    background-color: #ff5a73;
+}
+
+.price-input {
+    font-family: "Roboto Light", sans-serif;
+    font-size: 1em;
+    width: 60px;
+    text-align: center;
+    border: solid 1px #ccc;
+    outline: none;
+    margin: 0 10px;
+    padding: 5px;
+    background: transparent;
+}
+
+.price-label {
+    font-family: "Roboto Light", sans-serif;
+    font-size: 1em;
+    text-align: left;
+}
+
+.price-input:focus {
+    border: 1px solid #ff768f;
 }
 
 /* Search bar styling */
@@ -116,35 +191,44 @@
 
 .search-bar {
     display: flex;
-    justify-content: center;
+    justify-content: left;
+    border: transparent;
     margin-bottom: 30px;
     margin-left: 20px;
 }
 
 .search-bar input {
+    background-color: rgba(213, 213, 213, 0.32);
     width: 100%;
     max-width: 800px;
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #ddd;
+    font-family: Roboto, sans-serif;
     font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #ff768f;
 }
 
 .product-card {
-    background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    text-align: center;
-    transition: transform 0.2s, background-color 0.2s;
+    text-align: left;
+    font-family: "Roboto", sans-serif;
+    transition: transform 0.3s, background-color 0.3s;
     cursor: pointer;
     text-decoration: none;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
-    background-color: #f0f8ff;
+    background-color: #ffc8d2;
 }
+
 
 .product-card img {
     max-width: 100%;
@@ -164,22 +248,30 @@
     margin: 0 5px;
     padding: 8px 12px;
     border: none;
-    background-color: #ddd;
-    color: #333;
     cursor: pointer;
     border-radius: 20px;
     font-size: 1rem;
-    transition: background-color 0.2s;
+    transition: background-color 0.4s, transform 0.3s;
 }
 
-.page-button:hover {
-    background-color: #bbb;
-}
-
+/* Active state: pink background for active button */
 .page-button.active {
-    background-color: #007bff;
+    background-color: #ff768f; /* Pink color for active button */
     color: #fff;
 }
+
+/* Inactive state remains gray */
+.page-button:not(.active) {
+    background-color: #434343; /* Ensure inactive buttons are gray */
+    color: #ffffff;
+}
+
+/* Hover state for all buttons, including inactive ones */
+.page-button:not(.active):hover {
+    background-color: #555555; /* Slightly lighter gray for hover */
+    transform: scale(1.05);
+}
+
 
 .back-to-top {
     position: fixed;
@@ -199,10 +291,13 @@
 }
 
 .back-to-top:hover {
-    background-color: #706d6d;
+    background-color: #ff768f;
 }
 
-
+.nothing-to-show {
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+}
 
 
 

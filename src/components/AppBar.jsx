@@ -1,10 +1,11 @@
 import '../styles/appbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, {string} from 'prop-types';
 import profileIcon from '/img/profileicon.png';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useCart } from '../contexts/CartContext';
+import Sidebar from './Sidebar'; // Import the Sidebar component
 
 const AppBar = () => {
     const { user, logout } = useAuth();
@@ -17,9 +18,20 @@ const AppBar = () => {
     const user_role = localStorage.getItem("role");
     const profileImage = localStorage.getItem('profileImage');
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar visibility
+    const [oldCategory, setOldCategory] = useState(null); // Track previous category
+
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
+        // If the clicked category is the same as the previous category, toggle the sidebar
+        if (category === oldCategory) {
+            setSelectedCategory(null);
+            setIsSidebarOpen(!isSidebarOpen);
+        } else {
+            setIsSidebarOpen(true); // Open sidebar when a new category is clicked
+        }
+        setOldCategory(category); // Update oldCategory with the current category
     };
 
     const handleCheckout = () => {
@@ -118,25 +130,9 @@ const AppBar = () => {
                     )}
                 </div>
             </header>
-            <div className="categories-bar">
-                <ul className="categories-list">
-                    <li>Tshirts</li>
-                    <li>Jeans</li>
-                    <li>Shorts</li>
-                    <li>Pants</li>
-                    <li>Bags</li>
-                    <li>Tops</li>
-                    <li>Blouses</li>
-                    <li>Hats</li>
-                    <li>Jackets</li>
-                    <li>Dress</li>
-                    <li>Sneakers</li>
-                    <li>Accessories</li>
-                </ul>
-                <span className="search-bar-container">
-                    <input type="text" placeholder="Search..." className="search-bar" />
-                </span>
-            </div>
+
+            {/* Sidebar Component: Appears when isSidebarOpen is true */}
+            {isSidebarOpen && <Sidebar />}
         </>
     );
 };
