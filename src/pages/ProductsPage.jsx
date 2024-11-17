@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/products.css';
 
 const ProductsPage = () => {
@@ -21,6 +21,54 @@ const ProductsPage = () => {
     const [delayCompleted, setDelayCompleted] = useState(false); // New state for delay
     const itemsPerPage = 12;
 
+    const location = useLocation();
+    const navigate = useNavigate();
+    // // Function to update URL based on selected filters
+    // const updateURLWithFilters = () => {
+    //     const params = new URLSearchParams();
+    //
+    //     // Add selected categories to the URL
+    //     selectedCategories.forEach((category) => {
+    //         params.append('category', category);
+    //     });
+    //
+    //     // Add selected colors to the URL
+    //     selectedColors.forEach((color) => {
+    //         params.append('color', color);
+    //     });
+    //
+    //     // Add selected genders to the URL
+    //     selectedGender.forEach((gender) => {
+    //         params.append('gender', gender);
+    //     });
+    //
+    //     // Add selected price range to the URL
+    //     if (priceRange[0] !== 0 || priceRange[1] !== 15000) {
+    //         params.append('minPrice', priceRange[0]);
+    //         params.append('maxPrice', priceRange[1]);
+    //     }
+    //
+    //     // Update the URL with the filters
+    //     navigate(`?${params.toString()}`, { replace: true });
+    // };
+    //
+    // // Sync filter selections with URL when they change
+    // useEffect(() => {
+    //     updateURLWithFilters(); // Update the URL when filters change
+    // }, [selectedCategories, selectedColors, selectedGender, priceRange]);
+
+    useEffect(() => {
+        // Update selected categories from URL
+        const params = new URLSearchParams(location.search);
+        const categoryFromURL = params.get('category');
+        const genderFromURL = params.get('gender');
+        if (categoryFromURL) {
+            setSelectedCategories([categoryFromURL.toUpperCase()]);
+        }
+        if(genderFromURL){
+            setSelectedGender([genderFromURL.toUpperCase()]);
+        }
+    }, [location]);
 
     useEffect(() => {
         fetchProducts();

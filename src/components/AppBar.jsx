@@ -48,20 +48,20 @@ const AppBar = () => {
             <header className="app-bar">
                 <div className="category-selector">
                     <span
-                        onClick={() => handleCategoryClick('men')}
-                        className={selectedCategory === 'men' ? 'selected' : ''}
+                        onClick={() => handleCategoryClick('MALE')}
+                        className={selectedCategory === 'MALE' ? 'selected' : ''}
                     >
                         Bărbați
                     </span>
                     <span
-                        onClick={() => handleCategoryClick('women')}
-                        className={selectedCategory === 'women' ? 'selected' : ''}
+                        onClick={() => handleCategoryClick('FEMALE')}
+                        className={selectedCategory === 'FEMALE' ? 'selected' : ''}
                     >
                         Femei
                     </span>
                     <span
-                        onClick={() => handleCategoryClick('unisex')}
-                        className={selectedCategory === 'unisex' ? 'selected' : ''}
+                        onClick={() => handleCategoryClick('UNISEX')}
+                        className={selectedCategory === 'UNISEX' ? 'selected' : ''}
                     >
                         Unisex
                     </span>
@@ -132,7 +132,7 @@ const AppBar = () => {
             </header>
 
             {/* Sidebar Component: Appears when isSidebarOpen is true */}
-            {isSidebarOpen && <Sidebar />}
+            {isSidebarOpen && <Sidebar gender={selectedCategory}/>}
         </>
     );
 };
