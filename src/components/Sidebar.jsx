@@ -20,8 +20,23 @@ const Sidebar = ({ gender }) => {  // Accept gender as a prop
     ];
 
     const handleCategoryClick = (categoryValue) => {
-        // Now we use the gender prop in the URL
-        navigate(`/products?gender=${gender}&category=${categoryValue}`, { replace: true });
+        const currentParams = new URLSearchParams(window.location.search);
+
+        // Handle gender
+        const existingGenders = currentParams.getAll('gender');
+        if (!existingGenders.includes(gender)) {
+            currentParams.append('gender', gender); // Append the new gender
+        }
+
+        // Handle category
+        const existingCategories = currentParams.getAll('category');
+        if (!existingCategories.includes(categoryValue)) {
+            currentParams.append('category', categoryValue); // Append the new category
+        }
+
+        // Update the URL with the new parameters
+        navigate(`/products?${currentParams.toString()}`, { replace: true });
+        window.location.reload();
     };
 
     return (

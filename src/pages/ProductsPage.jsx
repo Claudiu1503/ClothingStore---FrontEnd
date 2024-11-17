@@ -23,52 +23,62 @@ const ProductsPage = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
-    // // Function to update URL based on selected filters
-    // const updateURLWithFilters = () => {
-    //     const params = new URLSearchParams();
-    //
-    //     // Add selected categories to the URL
-    //     selectedCategories.forEach((category) => {
-    //         params.append('category', category);
-    //     });
-    //
-    //     // Add selected colors to the URL
-    //     selectedColors.forEach((color) => {
-    //         params.append('color', color);
-    //     });
-    //
-    //     // Add selected genders to the URL
-    //     selectedGender.forEach((gender) => {
-    //         params.append('gender', gender);
-    //     });
-    //
-    //     // Add selected price range to the URL
-    //     if (priceRange[0] !== 0 || priceRange[1] !== 15000) {
-    //         params.append('minPrice', priceRange[0]);
-    //         params.append('maxPrice', priceRange[1]);
-    //     }
-    //
-    //     // Update the URL with the filters
-    //     navigate(`?${params.toString()}`, { replace: true });
-    // };
-    //
-    // // Sync filter selections with URL when they change
-    // useEffect(() => {
-    //     updateURLWithFilters(); // Update the URL when filters change
-    // }, [selectedCategories, selectedColors, selectedGender, priceRange]);
+    // Function to update URL based on selected filters
+    const updateURLWithFilters = () => {
+        const params = new URLSearchParams();
 
+        // Add selected categories to the URL
+        selectedCategories.forEach((category) => {
+            params.append('category', category);
+        });
+
+        // Add selected colors to the URL
+        selectedColors.forEach((color) => {
+            params.append('color', color);
+        });
+
+        // Add selected genders to the URL
+        selectedGender.forEach((gender) => {
+            params.append('gender', gender);
+        });
+
+        // Add selected price range to the URL
+        if (priceRange[0] !== 0 || priceRange[1] !== 15000) {
+            params.append('minPrice', priceRange[0]);
+            params.append('maxPrice', priceRange[1]);
+        }
+
+        // Update the URL with the filters
+        navigate(`?${params.toString()}`, { replace: true });
+    };
+
+    // Sync filter selections with URL when they change
+    useEffect(() => {
+        updateURLWithFilters(); // Update the URL when filters change
+    }, [selectedCategories, selectedColors, selectedGender, priceRange]);
+
+    //for filters persistance
     useEffect(() => {
         // Update selected categories from URL
         const params = new URLSearchParams(location.search);
-        const categoryFromURL = params.get('category');
-        const genderFromURL = params.get('gender');
+        const categoryFromURL = params.getAll('category');
+        const colorFromURL = params.getAll('color');
+        const genderFromURL = params.getAll('gender');
+        const minPriceFromURL = params.getAll('minPrice');
+        const maxPriceFromURL = params.getAll('maxPrice');
+
         if (categoryFromURL) {
-            setSelectedCategories([categoryFromURL.toUpperCase()]);
+            setSelectedCategories(categoryFromURL.map((category) => category.toUpperCase()));
         }
-        if(genderFromURL){
-            setSelectedGender([genderFromURL.toUpperCase()]);
+        if(colorFromURL) {
+            setSelectedColors(colorFromURL.map((category) => category.toUpperCase()));
         }
-    }, [location]);
+        if(genderFromURL) {
+            setSelectedGender(genderFromURL.map((category) => category.toUpperCase()));
+        }
+        setPriceRange([0, 15000]);
+
+    }, []); //applied only once per load/reload page (to avoid conflicts)
 
     useEffect(() => {
         fetchProducts();
@@ -321,41 +331,41 @@ const ProductsPage = () => {
                     />
                 </div>
                 {delayCompleted ? (
-                <div className="product-list">
-                    {displayedProducts.length > 0 ? (
-                        displayedProducts.map((product) => (
-                            <Link key={product.id} to={`/product/${product.id}`} className="product-card">
-                                <img
-                                    src={`/productimages/${product.id}-1.png`}
-                                    alt={product.name}
-                                    onError={(e) => {
-                                        e.target.src = '/productimages/default.png';
-                                    }}
-                                />
-                                <h3>{product.name}</h3>
-                                <p style={{fontWeight: 'bold', color: 'green'}}>Price: ${product.price}</p>
-                                <p style={{fontWeight: 'bold'}}>Brand: {product.brand}</p>
-                                <p>Category: {product.category}</p>
-                            </Link>
-                        ))
-                    ) : (
-                        <div className="nothing-to-show">No products found.</div>
-                    )}
-                </div>
+                    <div className="product-list">
+                        {displayedProducts.length > 0 ? (
+                            displayedProducts.map((product) => (
+                                <Link key={product.id} to={`/product/${product.id}`} className="product-card">
+                                    <img
+                                        src={`/productimages/${product.id}-1.png`}
+                                        alt={product.name}
+                                        onError={(e) => {
+                                            e.target.src = '/productimages/default.png';
+                                        }}
+                                    />
+                                    <h3>{product.name}</h3>
+                                    <p style={{fontWeight: 'bold', color: 'green'}}>Price: ${product.price}</p>
+                                    <p style={{fontWeight: 'bold'}}>Brand: {product.brand}</p>
+                                    <p>Category: {product.category}</p>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="nothing-to-show">No products found.</div>
+                        )}
+                    </div>
                 ) : (<div className="nothing-to-show">Loading...</div>)}
 
                 {delayCompleted ? (
                     <div className="pagination">
-                    {[...Array(totalPages).keys()].map((pageNumber) => (
-                        <button
-                            key={pageNumber + 1}
-                            className={`page-button ${currentPage === pageNumber + 1 ? 'active' : ''}`}
-                            onClick={() => handlePageChange(pageNumber + 1)}
-                        >
-                            {pageNumber + 1}
-                        </button>
-                    ))}
-                </div>
+                        {[...Array(totalPages).keys()].map((pageNumber) => (
+                            <button
+                                key={pageNumber + 1}
+                                className={`page-button ${currentPage === pageNumber + 1 ? 'active' : ''}`}
+                                onClick={() => handlePageChange(pageNumber + 1)}
+                            >
+                                {pageNumber + 1}
+                            </button>
+                        ))}
+                    </div>
                 ) : (<div> </div>)}
 
 
