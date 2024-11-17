@@ -16,6 +16,7 @@
     font-weight: bold;
     color: #fff;
     margin-right: auto;
+    text-decoration: none;
 }
 
 .category-selector span {
@@ -27,8 +28,13 @@
     position: relative;
 }
 
+.categories-list li.selected {
+    color: #ffb340;
+}
 .category-selector span.selected {
     color: #1ffff8;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .category-selector span.selected::after {
@@ -88,6 +94,7 @@
 }
 
 .categories-list li {
+    font-family: Bahnschrift, serif;
     cursor: pointer;
     font-size: 16px;
     color: #333;
@@ -95,29 +102,8 @@
 }
 
 .categories-list li:hover {
-    color: #ff4081;
+    color: #000000;
 }
-
-.search-bar-container {
-    display: flex;
-    padding-left: 600px;
-    border: none;
-}
-
-.search-bar {
-    padding: 5px 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 80px;
-    transition: box-shadow 0.3s;
-}
-
-.search-bar:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(255, 64, 129, 0.5);
-}
-
 
 
 

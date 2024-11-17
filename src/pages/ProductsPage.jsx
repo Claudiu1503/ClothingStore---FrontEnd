@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import '../styles/products.css';
 
 const ProductsPage = () => {
@@ -19,6 +19,13 @@ const ProductsPage = () => {
         price: true,
     });
     const itemsPerPage = 12;
+    const location = useLocation();
+    const { gender, category } = location.state || {};
+
+    useEffect(() => {
+        if (gender) setSelectedGender([gender]);
+        if (category) setSelectedCategories([category]);
+    }, [gender, category]);
 
     useEffect(() => {
         fetchProducts();
@@ -27,7 +34,8 @@ const ProductsPage = () => {
     useEffect(() => {
         filterProducts();
         setCurrentPage(1);
-    }, [searchTerm, selectedCategories, selectedColors, selectedGender, priceRange, products]);
+    }, [searchTerm, selectedCategories, selectedColors, selectedGender, priceRange, products, selectedGender]);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -262,7 +270,7 @@ const ProductsPage = () => {
 
                 {showBackToTop && (
                     <button className="back-to-top" onClick={scrollToTop}>
-                        Back to Top
+                        ⬆️Top
                     </button>
                 )}
             </main>

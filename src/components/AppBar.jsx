@@ -17,9 +17,23 @@ const AppBar = () => {
     const user_role = localStorage.getItem("role");
     const profileImage = localStorage.getItem('profileImage');
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedGender, setSelectedGender] = useState(null);
+    const [availableCategories, setAvailableCategories] = useState([]);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
+        navigate('/products', { state: { gender: selectedGender, category } });
+        setSelectedCategory(null)
+        setSelectedGender(null)
+    };
+
+    // Handler for gender click
+    const handleGenderClick = (gender) => {
+        setSelectedGender(gender);
+        setAvailableCategories(
+            ["TSHIRTS", "JEANS", "SHORTS", "PANTS", "BAGS", "TOPS", "BLOUSES", "HATS", "JACKETS", "DRESS", "SNEAKERS", "ACCESSORIES"]
+        );
+        setSelectedCategory(null); // Reset category on gender change
     };
 
     const handleCheckout = () => {
@@ -35,24 +49,24 @@ const AppBar = () => {
         <>
             <header className="app-bar">
                 <div className="category-selector">
+                <span
+                    onClick={() => handleGenderClick('MALE')}
+                    className={selectedGender === 'MALE' ? 'selected' : ''}
+                >
+                    Man
+                </span>
                     <span
-                        onClick={() => handleCategoryClick('men')}
-                        className={selectedCategory === 'men' ? 'selected' : ''}
+                        onClick={() => handleGenderClick('FEMALE')}
+                        className={selectedGender === 'FEMALE' ? 'selected' : ''}
                     >
-                        Bărbați
-                    </span>
+                    Woman
+                </span>
                     <span
-                        onClick={() => handleCategoryClick('women')}
-                        className={selectedCategory === 'women' ? 'selected' : ''}
+                        onClick={() => handleGenderClick('UNISEX')}
+                        className={selectedGender === 'UNISEX' ? 'selected' : ''}
                     >
-                        Femei
-                    </span>
-                    <span
-                        onClick={() => handleCategoryClick('unisex')}
-                        className={selectedCategory === 'unisex' ? 'selected' : ''}
-                    >
-                        Unisex
-                    </span>
+                    Unisex
+                </span>
                 </div>
                 <div className="app-name" onClick={() => navigate('/')}>
                     ClothingStore
@@ -109,7 +123,8 @@ const AppBar = () => {
                                     <button onClick={() => {
                                         logout();
                                         navigate('/');
-                                    }}>Sign Out</button>
+                                    }}>Sign Out
+                                    </button>
                                 </div>
                             )}
                         </div>
@@ -118,25 +133,21 @@ const AppBar = () => {
                     )}
                 </div>
             </header>
-            <div className="categories-bar">
-                <ul className="categories-list">
-                    <li>Tshirts</li>
-                    <li>Jeans</li>
-                    <li>Shorts</li>
-                    <li>Pants</li>
-                    <li>Bags</li>
-                    <li>Tops</li>
-                    <li>Blouses</li>
-                    <li>Hats</li>
-                    <li>Jackets</li>
-                    <li>Dress</li>
-                    <li>Sneakers</li>
-                    <li>Accessories</li>
-                </ul>
-                <span className="search-bar-container">
-                    <input type="text" placeholder="Search..." className="search-bar" />
-                </span>
-            </div>
+            {selectedGender && (
+                <div className="categories-bar">
+                    <ul className="categories-list">
+                        {availableCategories.map((category) => (
+                            <li
+                                key={category}
+                                className={selectedCategory === category ? 'selected' : ''}
+                                onClick={() => handleCategoryClick(category)}
+                            >
+                                {category}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </>
     );
 };
