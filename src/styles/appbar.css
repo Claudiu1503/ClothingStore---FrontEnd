@@ -16,7 +16,6 @@
     font-weight: bold;
     color: #fff;
     margin-right: auto;
-    text-decoration: none;
 }
 
 .category-selector span {
@@ -28,13 +27,8 @@
     position: relative;
 }
 
-.categories-list li.selected {
-    color: #ffb340;
-}
 .category-selector span.selected {
-    color: #1ffff8;
-    font-weight: bold;
-    text-decoration: none;
+    color: #ff768f;
 }
 
 .category-selector span.selected::after {
@@ -42,7 +36,7 @@
     position: absolute;
     width: 0;
     height: 2px;
-    background-color: #000000;
+    background-color: #ff768f;
     bottom: 0;
     left: 50%;
     animation: expandLine 0.3s ease-out forwards;
@@ -83,54 +77,6 @@
     align-items: center;
     background-color: #f4f4f4;
     padding: 5px 20px;
-}
-
-.categories-list {
-    display: flex;
-    gap: 15px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.categories-list li {
-    font-family: Bahnschrift, serif;
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    transition: color 0.3s;
-}
-
-.categories-list li:hover {
-    color: #000000;
-}
-
-
-
-
-
-
-.button-sidebar {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.dropdown-sidebar {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #444;
-    color: #000000;
-    box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 50px;
-    padding: 5px;
-    display: block;
-    flex-direction: column;
-    z-index: 1000;
-    animation: dropdown 0.4s ease-out;
 }
 
 .app-name-container {

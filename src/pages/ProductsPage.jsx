@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/products.css';
 
 const ProductsPage = () => {
@@ -13,29 +13,87 @@ const ProductsPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [showBackToTop, setShowBackToTop] = useState(false);
     const [filterOpen, setFilterOpen] = useState({
-        category: true,
-        color: true,
-        gender: true,
-        price: true,
+        category: false,
+        color: false,
+        gender: false,
+        price: false,
     });
+    const [delayCompleted, setDelayCompleted] = useState(false); // New state for delay
     const itemsPerPage = 12;
-    const location = useLocation();
-    const { gender, category } = location.state || {};
 
+    const location = useLocation();
+    const navigate = useNavigate();
+    // Function to update URL based on selected filters
+    const updateURLWithFilters = () => {
+        const params = new URLSearchParams();
+
+        // Add selected categories to the URL
+        selectedCategories.forEach((category) => {
+            params.append('category', category);
+        });
+
+        // Add selected colors to the URL
+        selectedColors.forEach((color) => {
+            params.append('color', color);
+        });
+
+        // Add selected genders to the URL
+        selectedGender.forEach((gender) => {
+            params.append('gender', gender);
+        });
+
+        // Add selected price range to the URL
+        if (priceRange[0] !== 0 || priceRange[1] !== 15000) {
+            params.append('minPrice', priceRange[0]);
+            params.append('maxPrice', priceRange[1]);
+        }
+
+        // Update the URL with the filters
+        navigate(`?${params.toString()}`, { replace: true });
+    };
+
+    // Sync filter selections with URL when they change
     useEffect(() => {
-        if (gender) setSelectedGender([gender]);
-        if (category) setSelectedCategories([category]);
-    }, [gender, category]);
+        updateURLWithFilters(); // Update the URL when filters change
+    }, [selectedCategories, selectedColors, selectedGender, priceRange]);
+
+    //for filters persistance
+    useEffect(() => {
+        // Update selected categories from URL
+        const params = new URLSearchParams(location.search);
+        const categoryFromURL = params.getAll('category');
+        const colorFromURL = params.getAll('color');
+        const genderFromURL = params.getAll('gender');
+        const minPriceFromURL = params.getAll('minPrice');
+        const maxPriceFromURL = params.getAll('maxPrice');
+
+        if (categoryFromURL) {
+            setSelectedCategories(categoryFromURL.map((category) => category.toUpperCase()));
+        }
+        if(colorFromURL) {
+            setSelectedColors(colorFromURL.map((category) => category.toUpperCase()));
+        }
+        if(genderFromURL) {
+            setSelectedGender(genderFromURL.map((category) => category.toUpperCase()));
+        }
+        setPriceRange([0, 15000]);
+
+    }, []); //applied only once per load/reload page (to avoid conflicts)
 
     useEffect(() => {
         fetchProducts();
     }, []);
 
     useEffect(() => {
+        // Set a delay of 0.55 seconds before showing content
+        const delayTimer = setTimeout(() => setDelayCompleted(true), 550);
+        return () => clearTimeout(delayTimer);
+    }, []);
+
+    useEffect(() => {
         filterProducts();
         setCurrentPage(1);
-    }, [searchTerm, selectedCategories, selectedColors, selectedGender, priceRange, products, selectedGender]);
-
+    }, [searchTerm, selectedCategories, selectedColors, selectedGender, priceRange, products]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -70,37 +128,42 @@ const ProductsPage = () => {
     };
 
     const handleSearch = (e) => {
-        setSearchTerm(e.target.value.toLowerCase());
+        setSearchTerm(e.target.value);
     };
 
-    const handleCheckboxChange = (e, setFunction, currentSelections) => {
-        const { value, checked } = e.target;
-        setFunction(checked
-            ? [...currentSelections, value]
-            : currentSelections.filter((item) => item !== value)
+    const handleToggleSelection = (value, setFunction, currentSelections) => {
+        setFunction((prevSelections) =>
+            prevSelections.includes(value)
+                ? prevSelections.filter((item) => item !== value) // Remove if already selected
+                : [...prevSelections, value] // Add if not selected
         );
     };
 
+
     const handlePriceInputChange = (index, value) => {
-        const newValue = parseInt(value, 10);
-        if (!isNaN(newValue) && newValue >= 0) {
+        // If the input is empty, we allow it to be an empty string
+        if (value === '' || /^[0-9]+$/.test(value)) {
             setPriceRange((prevRange) => {
                 const updatedRange = [...prevRange];
-                updatedRange[index] = newValue;
-                return updatedRange;
-            });
-        } else {
-            setPriceRange((prevRange) => {
-                const updatedRange = [...prevRange];
-                updatedRange[index] = '';
+                updatedRange[index] = value === '' ? 0 : parseInt(value, 10);
                 return updatedRange;
             });
         }
     };
+    const handlePriceButtonClick = (index, change) => {
+        setPriceRange((prevRange) => {
+            const updatedRange = [...prevRange];
+            const newValue = updatedRange[index] + change;
+            if (newValue >= 0) {
+                updatedRange[index] = newValue;
+            }
+            return updatedRange;
+        });
+    };
 
-    const filterProducts = () => {
+    const filterProducts = (term = searchTerm) => {
         let filtered = products.filter((product) =>
-            product.name.toLowerCase().includes(searchTerm)
+            product.name.toLowerCase().includes(term.toLowerCase()) // Make sure the comparison is case-insensitive
         );
 
         if (selectedCategories.length > 0) {
@@ -122,11 +185,12 @@ const ProductsPage = () => {
         setFilteredProducts(filtered);
     };
 
+
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const displayedProducts = filteredProducts.slice(
@@ -148,78 +212,111 @@ const ProductsPage = () => {
                 <h3>Filter by</h3>
 
                 <h4 onClick={() => toggleFilterOpen('category')}>
-                    Category <span>{filterOpen.category ? '-' : '+'}</span>
+                    <span>{filterOpen.category ? '⬓ Category' : '⬒ Category'}</span>
                 </h4>
                 {filterOpen.category && (
                     <div className="filter-group">
                         {["TSHIRTS", "JEANS", "SHORTS", "PANTS", "BAGS", "TOPS", "BLOUSES", "HATS", "JACKETS", "DRESS", "SNEAKERS", "ACCESSORIES"].map((category) => (
-                            <label key={category} className="checkbox-label">
-                                <input
-                                    type="checkbox"
-                                    value={category}
-                                    onChange={(e) => handleCheckboxChange(e, setSelectedCategories, selectedCategories)}
-                                />
+                            <button
+                                key={category}
+                                className={`filter-button ${selectedCategories.includes(category) ? 'active' : ''}`}
+                                onClick={() => handleToggleSelection(category, setSelectedCategories, selectedCategories)}
+                            >
                                 {category.charAt(0) + category.slice(1).toLowerCase()}
-                            </label>
+                            </button>
                         ))}
                     </div>
                 )}
 
                 <h4 onClick={() => toggleFilterOpen('color')}>
-                    Color <span>{filterOpen.color ? '-' : '+'}</span>
+                    <span>{filterOpen.color ? '⬓ Color' : '⬒ Color'}</span>
                 </h4>
                 {filterOpen.color && (
                     <div className="filter-group">
-                        {["WHITE", "BLACK", "BLUE", "RED", "GREEN", "YELLOW", "PURPLE", "PINK", "ORANGE", "BROWN", "GREY"].map((color) => (
-                            <label key={color} className="checkbox-label">
-                                <input
-                                    type="checkbox"
-                                    value={color}
-                                    onChange={(e) => handleCheckboxChange(e, setSelectedColors, selectedColors)}
-                                />
+                        {["WHITE", "BLACK", "BLUE", "RED", "GREEN", "YELLOW", "PURPLE", "PINK", "ORANGE", "BROWN", "GRAY"].map((color) => (
+                            <button
+                                key={color}
+                                className={`filter-button color-button ${selectedColors.includes(color) ? 'active' : ''}`}
+                                onClick={() => handleToggleSelection(color, setSelectedColors, selectedColors)}
+                            >
                                 <span className={`color-box ${color.toLowerCase()}`}></span>
                                 {color.charAt(0) + color.slice(1).toLowerCase()}
-                            </label>
+                            </button>
                         ))}
                     </div>
                 )}
 
                 <h4 onClick={() => toggleFilterOpen('gender')}>
-                    Gender <span>{filterOpen.gender ? '-' : '+'}</span>
+                    <span>{filterOpen.gender ? '⬓ Gender' : '⬒ Gender'}</span>
                 </h4>
                 {filterOpen.gender && (
                     <div className="filter-group">
                         {["MALE", "FEMALE", "UNISEX"].map((gender) => (
-                            <label key={gender} className="checkbox-label">
-                                <input
-                                    type="checkbox"
-                                    value={gender}
-                                    onChange={(e) => handleCheckboxChange(e, setSelectedGender, selectedGender)}
-                                />
+                            <button
+                                key={gender}
+                                className={`filter-button color-button ${selectedGender.includes(gender) ? 'active' : ''}`}
+                                onClick={() => handleToggleSelection(gender, setSelectedGender, selectedGender)}
+                            >
                                 {gender.charAt(0) + gender.slice(1).toLowerCase()}
-                            </label>
+                            </button>
                         ))}
                     </div>
                 )}
 
                 <h4 onClick={() => toggleFilterOpen('price')}>
-                    Price <span>{filterOpen.price ? '-' : '+'}</span>
+                    <span>{filterOpen.price ? '⬓ Price' : '⬒ Price'}</span>
                 </h4>
                 {filterOpen.price && (
-                    <div className="price-inputs">
-                        <input
-                            type="text"
-                            value={priceRange[0]}
-                            onChange={(e) => handlePriceInputChange(0, e.target.value)}
-                            placeholder="Min"
-                        />
-                        <span> - </span>
-                        <input
-                            type="text"
-                            value={priceRange[1]}
-                            onChange={(e) => handlePriceInputChange(1, e.target.value)}
-                            placeholder="Max"
-                        />
+                    <div className="price-cards">
+                        {/* Card for Minimum Price */}
+                        <div className="price-label">
+                            Min
+                        </div>
+                        <div className="price-card">
+
+                            <button
+                                className="price-btn"
+                                onClick={() => handlePriceButtonClick(0, -50)}
+                            >
+                                -
+                            </button>
+                            <input
+                                type="text"
+                                value={priceRange[0]}
+                                onChange={(e) => handlePriceInputChange(0, e.target.value)}
+                                className="price-input"
+                            />
+                            <button
+                                className="price-btn"
+                                onClick={() => handlePriceButtonClick(0, 50)}
+                            >
+                                +
+                            </button>
+                        </div>
+                        {/* Card for Maximum Price */}
+                        <div className="price-label">
+                            Max
+                        </div>
+                        <div className="price-card">
+                            <button
+                                className="price-btn"
+                                onClick={() => handlePriceButtonClick(1, -50)}
+                            >
+                                -
+                            </button>
+                            <input
+                                type="text"
+                                value={priceRange[1]}
+                                onChange={(e) => handlePriceInputChange(1, e.target.value)}
+                                className="price-input"
+                            />
+                            <button
+                                className="price-btn"
+                                onClick={() => handlePriceButtonClick(1, 50)}
+                            >
+                                +
+                            </button>
+                        </div>
                     </div>
                 )}
             </aside>
@@ -233,44 +330,48 @@ const ProductsPage = () => {
                         onChange={handleSearch}
                     />
                 </div>
+                {delayCompleted ? (
+                    <div className="product-list">
+                        {displayedProducts.length > 0 ? (
+                            displayedProducts.map((product) => (
+                                <Link key={product.id} to={`/product/${product.id}`} className="product-card">
+                                    <img
+                                        src={`/productimages/${product.id}-1.png`}
+                                        alt={product.name}
+                                        onError={(e) => {
+                                            e.target.src = '/productimages/default.png';
+                                        }}
+                                    />
+                                    <h3>{product.name}</h3>
+                                    <p style={{fontWeight: 'bold', color: 'green'}}>Price: ${product.price}</p>
+                                    <p style={{fontWeight: 'bold'}}>Brand: {product.brand}</p>
+                                    <p>Category: {product.category}</p>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="nothing-to-show">No products found.</div>
+                        )}
+                    </div>
+                ) : (<div className="nothing-to-show">Loading...</div>)}
 
-                <div className="product-list">
-                    {displayedProducts.length > 0 ? (
-                        displayedProducts.map((product) => (
-                            <Link key={product.id} to={`/product/${product.id}`} className="product-card">
-                                <img
-                                    src={`/productimages/${product.id}-1.png`}
-                                    alt={product.name}
-                                    onError={(e) => {
-                                        e.target.src = '/productimages/default.png';
-                                    }}
-                                />
-                                <h3>{product.name}</h3>
-                                <p style={{fontWeight: 'bold', color: 'green'}}>Price: ${product.price}</p>
-                                <p style={{fontWeight: 'bold'}}>Brand: {product.brand}</p>
-                                <p>Category: {product.category}</p>
-                            </Link>
-                        ))
-                    ) : (
-                        <p>No products found.</p>
-                    )}
-                </div>
+                {delayCompleted ? (
+                    <div className="pagination">
+                        {[...Array(totalPages).keys()].map((pageNumber) => (
+                            <button
+                                key={pageNumber + 1}
+                                className={`page-button ${currentPage === pageNumber + 1 ? 'active' : ''}`}
+                                onClick={() => handlePageChange(pageNumber + 1)}
+                            >
+                                {pageNumber + 1}
+                            </button>
+                        ))}
+                    </div>
+                ) : (<div> </div>)}
 
-                <div className="pagination">
-                    {[...Array(totalPages).keys()].map((pageNumber) => (
-                        <button
-                            key={pageNumber + 1}
-                            className={`page-button ${currentPage === pageNumber + 1 ? 'active' : ''}`}
-                            onClick={() => handlePageChange(pageNumber + 1)}
-                        >
-                            {pageNumber + 1}
-                        </button>
-                    ))}
-                </div>
 
                 {showBackToTop && (
                     <button className="back-to-top" onClick={scrollToTop}>
-                        ⬆️Top
+                        Back to Top
                     </button>
                 )}
             </main>
