@@ -190,7 +190,7 @@ const ProductsPage = () => {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-        // window.scrollTo({ top: 0, behavior: 'smooth' });
+         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const displayedProducts = filteredProducts.slice(
