@@ -64,7 +64,8 @@ const UserOrders = () => {
                 <div key={order.id} className="order-card">
                     <h3 className="order-header">
                         Order id: {order.id}
-                        <span className="total-price">  Total: {order.total} $</span>
+                        <span className="total-price">  Total: {order.total.toFixed(2)} $</span>
+
                     </h3>
                     <h5 className="order-status" style={{color: "green"}}>Status: Processed ✓</h5>
                     <h4 className="order-subheader">Products:</h4>
