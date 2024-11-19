@@ -306,6 +306,7 @@
 }
 
 .button-container {
+    padding-top: 10px;
     display: flex;
     justify-content: center; /* Horizontal centering */
 }
@@ -322,6 +323,7 @@
 }
 
 .clear-filters-button:hover {
+
     background-color: #737373; /* Highlight background color */
     color: #fff; /* Highlight text color */
 }
