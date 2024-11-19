@@ -371,7 +371,7 @@ const ProductsPage = () => {
 
                 {showBackToTop && (
                     <button className="back-to-top" onClick={scrollToTop}>
-                        ⬆️Back to Top
+                        ⭡ Back to Top
                     </button>
                 )}
             </main>
