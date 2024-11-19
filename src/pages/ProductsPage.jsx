@@ -23,6 +23,11 @@ const ProductsPage = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
+
+    const resetURL = () => {
+        navigate('/products', { replace: true });
+        window.location.reload();
+    }
     // Function to update URL based on selected filters
     const updateURLWithFilters = () => {
         const params = new URLSearchParams();
@@ -319,6 +324,14 @@ const ProductsPage = () => {
                         </div>
                     </div>
                 )}
+                <div className="button-container">
+                    <button
+                        className="clear-filters-button"
+                        onClick={() => resetURL()}
+                    >
+                        Clear filters
+                    </button>
+                </div>
             </aside>
 
             <main className="products-content">

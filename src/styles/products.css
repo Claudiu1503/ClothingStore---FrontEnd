@@ -254,6 +254,7 @@
     border: none;
     cursor: pointer;
     border-radius: 20px;
+    font-family: "Roboto", sans-serif;
     font-size: 1rem;
     transition: background-color 0.4s, transform 0.3s;
 }
@@ -287,6 +288,7 @@
     border: none;
     border-radius: 50px;
     cursor: pointer;
+    font-family: "Roboto", sans-serif;
     font-size: 16px;
     display: flex;
     align-items: center;
@@ -303,6 +305,25 @@
     text-align: center;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+}
 
+.clear-filters-button {
+    background-color: #e4e4e4; /* Normal state background */
+    color: #686868; /* Normal state text color */
+    border: 1px transparent;
+    border-radius: 25px;
+    font-family: "Roboto bold", sans-serif;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.clear-filters-button:hover {
+    background-color: #737373; /* Highlight background color */
+    color: #fff; /* Highlight text color */
+}
 
 

@@ -36,7 +36,7 @@ const Sidebar = ({ gender }) => {  // Accept gender as a prop
 
         // Update the URL with the new parameters
         navigate(`/products?${currentParams.toString()}`, { replace: true });
-        window.location.reload();
+        window.location.reload(); //refresh page
     };
 
     return (
