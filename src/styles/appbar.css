@@ -28,7 +28,7 @@
 }
 
 .category-selector span.selected {
-    color: #ff768f;
+    color: #1ffff8;
 }
 
 .category-selector span.selected::after {
@@ -36,7 +36,7 @@
     position: absolute;
     width: 0;
     height: 2px;
-    background-color: #ff768f;
+    background-color: #000000;
     bottom: 0;
     left: 50%;
     animation: expandLine 0.3s ease-out forwards;

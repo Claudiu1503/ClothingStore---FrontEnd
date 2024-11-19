@@ -13,7 +13,7 @@
 
     .sidebar h3 {
         margin: 200px;
-        color: #ff768f;
+        color: #ffb340;
     }
 
     .sidebar ul {
@@ -29,6 +29,6 @@
     }
 
     .sidebar ul li:hover {
-        color: #ff768f;
+        color: #fd0202;
         transform: scale(1.1); /* Slight zoom effect when hovering */
     }

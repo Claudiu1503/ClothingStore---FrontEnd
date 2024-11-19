@@ -11,6 +11,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: "Roboto Light", sans-serif;
+    border: none;
 }
 
 /* Filter headers for each section */
@@ -20,6 +21,7 @@
     color: #454545;
     margin-bottom: 10px;
     font-weight: bold;
+    border: none;
 }
 
 .filter-menu h4 {
@@ -35,17 +37,19 @@
     background-color: #eaeaea;
     border-radius: 4px;
     transition: background-color 0.6s, color 0.6s;
+    border: none;
 }
 
 .filter-menu h4:hover {
-    background-color: #ff768f;
-    color: WHITE;
+    background-color: rgba(255, 223, 64, 0.72);
+    color: #000000;
 }
 
 /* Filter group container */
 .filter-group {
     padding-left: 15px;
     margin-bottom: 10px;
+    border: none;
 }
 
 /* General Filter Button Styles */
@@ -69,8 +73,8 @@
 
 /* Active State */
 .filter-button.active {
-    color: #ff768f;
-    border-color: #ff768f;
+    color: #fd0202;
+    border-color: #ff0000;
     transform: scale(1.1); /* Slightly enlarges the button and its content */
 }
 
@@ -146,7 +150,7 @@
 }
 
 .price-btn:hover {
-    background-color: #ff5a73;
+    background-color: #000000;
 }
 
 .price-input {
@@ -168,7 +172,7 @@
 }
 
 .price-input:focus {
-    border: 1px solid #ff768f;
+    border: 1px solid #000000;
 }
 
 /* Search bar styling */
@@ -210,7 +214,7 @@
 }
 
 .search-bar input:focus {
-    border-color: #ff768f;
+    border-color: #b39500;
 }
 
 .product-card {
@@ -256,7 +260,7 @@
 
 /* Active state: pink background for active button */
 .page-button.active {
-    background-color: #ff768f; /* Pink color for active button */
+    background-color: #1ffff8; /* Pink color for active button */
     color: #fff;
 }
 
@@ -291,7 +295,7 @@
 }
 
 .back-to-top:hover {
-    background-color: #ff768f;
+    background-color: #787777;
 }
 
 .nothing-to-show {

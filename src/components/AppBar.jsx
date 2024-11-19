@@ -51,13 +51,13 @@ const AppBar = () => {
                         onClick={() => handleCategoryClick('MALE')}
                         className={selectedCategory === 'MALE' ? 'selected' : ''}
                     >
-                        Bărbați
+                        Male
                     </span>
                     <span
                         onClick={() => handleCategoryClick('FEMALE')}
                         className={selectedCategory === 'FEMALE' ? 'selected' : ''}
                     >
-                        Femei
+                        Female
                     </span>
                     <span
                         onClick={() => handleCategoryClick('UNISEX')}
