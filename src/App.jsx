@@ -14,6 +14,7 @@ import Cart from './components/Cart';
 import { CartProvider } from './contexts/CartContext';
 import { useState } from 'react';
 import UserOrders from './pages/UserOrders';
+import FavoritesPage from './pages/FavoritesPage';
 
 const App = () => {
     const location = useLocation();
@@ -55,6 +56,7 @@ const App = () => {
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
                     <Route path="/userorders" element={<UserOrders />} />
+                    <Route path="/favorites" element={<FavoritesPage />} />
                 </Routes>
             </div>
         </CartProvider>
