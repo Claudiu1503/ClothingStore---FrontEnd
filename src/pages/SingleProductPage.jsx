@@ -38,6 +38,7 @@ const SingleProductPage = () => {
     const [reviews, setReviews] = useState([]);
     const [reviewContent, setReviewContent] = useState('');
     const [reviewRating, setReviewRating] = useState(5);
+    const [isProcessing, setIsProcessing] = useState(false); //to avoid button mashing (the heart)
 
     const user_id = localStorage.getItem("id") || null;
     const email = localStorage.getItem("email");
@@ -86,9 +87,28 @@ const SingleProductPage = () => {
             }
         };
 
+        const fetchFavorites = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/favorite/userid/${user_id}/get-all`, {
+                    headers: getAuthHeader(),
+                });
+                if (response.ok) {
+                    const favorites = await response.json();
+                    // Check if the product ID is in the favorites list
+                    const isFavorited = favorites.some((fav) => fav.product.id === parseInt(id, 10));
+                    setIsFavorite(isFavorited);
+                } else {
+                    console.error('Failed to fetch favorites');
+                }
+            } catch (error) {
+                console.error('Error fetching favorites:', error);
+            }
+        };
+
         fetchProduct();
         fetchReviews();
-    }, [id]);
+        fetchFavorites();
+    }, [id, user_id]);
 
     const handleAddToCart = () => {
         if(user_id !=null) {
@@ -140,15 +160,54 @@ const SingleProductPage = () => {
         setImageError(false);
     };
 
-    const toggleFavorite = () => setIsFavorite((prev) => !prev);
+    const toggleFavorite = async () => {
+        console.log("Toggle favorite clicked");
+        if(isProcessing) return; //avoid button mashing
+        setIsProcessing(true);
 
+        try {
+            // Determine the endpoint and HTTP method
+            const endpoint = isFavorite
+                ? `http://localhost:8080/favorite/delete-one-product`
+                : `http://localhost:8080/favorite/add`;
+
+            const method = isFavorite ? "DELETE" : "POST";
+
+            // Construct the query parameters
+            const params = new URLSearchParams({
+                product: product.id, // Use the product ID
+                user: user_id,       // Use the user ID
+            });
+
+            //Optimistic approach, for faster display
+            setIsFavorite(!isFavorite);
+
+            // Send the request
+            const response = await fetch(`${endpoint}?${params.toString()}`, {
+                method: method,
+                headers: getAuthHeader(),
+            });
+
+            if (response.ok) {
+                console.log(
+                    isFavorite ? "Successfully removed from favorites" : "Successfully added to favorites"
+                );
+            } else {
+                //if the response is negative, we revert the modification
+                setIsFavorite(!isFavorite);
+                console.error("Failed to toggle favorite status");
+            }
+        } catch (error) {
+            console.error("Error toggling favorite:", error);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
 
 
     if (!product) {
         return <p>Loading...</p>;
     }
-
-
 
     return (
         <div className="single-product-page">
