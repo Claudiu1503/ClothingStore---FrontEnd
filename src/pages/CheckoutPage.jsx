@@ -116,7 +116,7 @@ const CheckoutPage = () => {
                                     />
                                     <button
                                         onClick={() => handleQuantityChange(item, item.quantity + 1)}
-                                        disabled={item.quantity >= (productDetails[index]?.stock || 0)}
+                                        // disabled={item.quantity >= (productDetails[index]?.stock || 0)}
                                     >
                                         +
                                     </button>
