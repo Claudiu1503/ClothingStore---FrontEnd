@@ -1,24 +1,29 @@
+/* Home Container */
 .home-container {
-    display: flex;
+    width: 100%;
+    max-width: 1900px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
-.main-content {
-    flex: 1;
+/* Slider Image */
+.image-slide {
+    position: relative;
+    width: 100%;
+    height: 850px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.image-container {
-    position: relative;
-}
-
 .fashion-image {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
-/* Overlay with blurred background */
+/* Overlay for Slide Content */
 .overlay {
     position: absolute;
     top: 0;
@@ -29,22 +34,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1%);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(5px);
-    border-radius: 10px;
-}
-
-.animated-text {
-    font-size: 70px;
-    color: white;
-    text-shadow: 10px 10px 8px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
     opacity: 0;
-    transform: scale(0.8); /* Start with a smaller size */
-    animation: fadeInMoveUpAndScale 1s ease-out forwards;
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* Combined animation: fade in, move up, and scale */
+.image-slide:hover .overlay {
+    opacity: 1;
+}
+
+/* Slide Text */
+.animated-text {
+    font-size: 50px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Button Styling */
 @keyframes fadeInMoveUpAndScale {
     0% {
         opacity: 0;
@@ -169,4 +177,30 @@
     }
 }
 
+/* Slick Dots */
+.slick-dots {
+    bottom: 20px; /* Position dots at the bottom */
+}
 
+.slick-dots li button:before {
+    color: white; /* Default dot color */
+    font-size: 12px;
+    opacity: 0.5; /* Transparent inactive dots */
+}
+
+.slick-dots .slick-active button:before {
+    color: #f94d94; /* Active dot color */
+    opacity: 1; /* Fully opaque active dot */
+}
+
+/* Slick Arrow Customization (Optional) */
+.slick-prev, .slick-next {
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+
+.slick-prev:hover, .slick-next:hover {
+    color: #f94d94;
+}
