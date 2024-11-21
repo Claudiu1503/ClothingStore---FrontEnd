@@ -65,7 +65,7 @@ const AppBar = () => {
                     </span>
                 </div>
                 <div className="app-name" onClick={() => navigate('/')}>
-                    ClothingStore
+                    Fashion-World
                 </div>
                 <div className="action-container">
                     <div className="cart-container">
