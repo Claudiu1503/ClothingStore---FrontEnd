@@ -12,26 +12,24 @@ const AppBar = () => {
     const { cartItems } = useCart();
     const navigate = useNavigate();
     const [showOptions, setShowOptions] = useState(false);
-    const [showCartDropdown, setShowCartDropdown] = useState(false);
+    const [showCartDropdown, setShowCartDropdown] = useState(false); // Doar pentru Cart
     const [authMessage, setAuthMessage] = useState('');
     const user_id = localStorage.getItem("id") || null;
     const user_role = localStorage.getItem("role");
     const profileImage = localStorage.getItem('profileImage');
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar visibility
-    const [oldCategory, setOldCategory] = useState(null); // Track previous category
-
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [oldCategory, setOldCategory] = useState(null);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
-        // If the clicked category is the same as the previous category, toggle the sidebar
         if (category === oldCategory) {
             setSelectedCategory(null);
             setIsSidebarOpen(!isSidebarOpen);
         } else {
-            setIsSidebarOpen(true); // Open sidebar when a new category is clicked
+            setIsSidebarOpen(true);
         }
-        setOldCategory(category); // Update oldCategory with the current category
+        setOldCategory(category);
     };
 
     const handleCheckout = () => {
@@ -94,6 +92,15 @@ const AppBar = () => {
                             </div>
                         )}
                     </div>
+
+                    {user ? (
+                        <button className="favorites-button" onClick={() => navigate('/favorites')}>
+                        ❤️ Favorites
+                    </button>
+                    ):(
+                        <p></p>
+                    )}
+
                     {user ? (
                         <div className="user-info">
                             <span
@@ -131,11 +138,11 @@ const AppBar = () => {
                 </div>
             </header>
 
-            {/* Sidebar Component: Appears when isSidebarOpen is true */}
             {isSidebarOpen && <Sidebar gender={selectedCategory}/>}
         </>
     );
 };
+
 
 AppBar.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,

@@ -1,7 +1,7 @@
 /* Home Container */
 .home-container {
     width: 100%;
-    max-width: 1900px;
+    max-width: 1930px;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -10,7 +10,7 @@
 .image-slide {
     position: relative;
     width: 100%;
-    height: 850px;
+    height: 865px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,13 @@
     border-radius: 10px;
 }
 
-/* Overlay for Slide Content */
+
+.image-slide:hover .overlay {
+    opacity: 1;
+    pointer-events: auto; /* Allows interaction with the overlay */
+}
+
+/* Add transition for smooth appearance */
 .overlay {
     position: absolute;
     top: 0;
@@ -37,11 +43,8 @@
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(5px);
     opacity: 0;
+    pointer-events: none; /* Prevent interaction when invisible */
     transition: opacity 0.5s ease-in-out;
-}
-
-.image-slide:hover .overlay {
-    opacity: 1;
 }
 
 /* Slide Text */
@@ -176,6 +179,7 @@
         transform: translateY(0);
     }
 }
+
 
 /* Slick Dots */
 .slick-dots {

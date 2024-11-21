@@ -59,7 +59,7 @@
     font-size: 24px;
     cursor: pointer;
     text-align: center;
-    margin-right: 450px;
+    margin-right: 600px;
 }
 
 .action-container {
@@ -236,4 +236,23 @@
 .checkout-button:hover {
     background-color: #ff1a5c;
 }
+
+
+
+.favorites-button {
+    background-color: #f5f5f5;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.favorites-button:hover {
+    background-color: #ffcccc;
+    transform: scale(1.05);
+}
+
 
