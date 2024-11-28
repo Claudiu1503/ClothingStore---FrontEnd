@@ -6,13 +6,14 @@ import "../styles/homepage.css";
 const HomePage = () => {
     const sliderSettings = {
         dots: true,
+        dotsClass: "slick-dots",
         infinite: true,
         speed: 1000,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3600,
-        pauseOnHover: false,
+        pauseOnHover: true,
     };
 
     const images = [
